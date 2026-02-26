@@ -39,7 +39,8 @@
         <div v-for="(tech, index) in row2" :key="`row2-${index}`" class="tech-card">
           <div class="card-header">
             <div class="tech-logo" :style="{ background: tech.color }">
-              <span>{{ tech.icon }}</span>
+              <span v-if="!tech.logo">{{ tech.icon }}</span>
+              <img v-else :src="tech.logo" :alt="tech.name" />
             </div>
             <div class="tech-info">
               <div class="tech-name">{{ tech.name }}</div>
@@ -52,7 +53,8 @@
         <div v-for="(tech, index) in row2" :key="`row2-dup-${index}`" class="tech-card">
           <div class="card-header">
             <div class="tech-logo" :style="{ background: tech.color }">
-              <span>{{ tech.icon }}</span>
+              <span v-if="!tech.logo">{{ tech.icon }}</span>
+              <img v-else :src="tech.logo" :alt="tech.name" />
             </div>
             <div class="tech-info">
               <div class="tech-name">{{ tech.name }}</div>
@@ -76,42 +78,47 @@ const row1 = ref([
     desc: 'Vue 官方渐进式 JavaScript 框架，易学易用，性能出色',
     icon: '💚',
     color: 'linear-gradient(135deg, #42b883 0%, #35495e 100%)',
-    logo: 'https://vuejs.org/images/logo.png'
+    logo: 'https://api.iconify.design/logos:vue.svg'
   },
   {
     name: 'React',
     type: '前端框架',
     desc: 'Facebook 开源的 UI 库，组件化开发，虚拟 DOM',
     icon: '⚛️',
-    color: 'linear-gradient(135deg, #61dafb 0%, #20232a 100%)'
+    color: 'linear-gradient(135deg, #61dafb 0%, #20232a 100%)',
+    logo: 'https://api.iconify.design/logos:react.svg'
   },
   {
     name: 'TypeScript',
     type: '编程语言',
     desc: 'JavaScript 的超集，提供静态类型检查，提升代码质量',
     icon: '🔷',
-    color: 'linear-gradient(135deg, #3178c6 0%, #235a97 100%)'
+    color: 'linear-gradient(135deg, #3178c6 0%, #235a97 100%)',
+    logo: 'https://api.iconify.design/logos:typescript-icon.svg'
   },
   {
     name: 'Vite',
     type: '构建工具',
     desc: '下一代前端构建工具，极速冷启动，即时热更新',
     icon: '⚡',
-    color: 'linear-gradient(135deg, #646cff 0%, #747bff 100%)'
+    color: 'linear-gradient(135deg, #646cff 0%, #747bff 100%)',
+    logo: 'https://api.iconify.design/logos:vitejs.svg'
   },
   {
     name: 'Tailwind CSS',
     type: 'CSS 框架',
     desc: '实用优先的 CSS 框架，快速构建现代化界面',
     icon: '🎨',
-    color: 'linear-gradient(135deg, #06b6d4 0%, #0891b2 100%)'
+    color: 'linear-gradient(135deg, #06b6d4 0%, #0891b2 100%)',
+    logo: 'https://api.iconify.design/logos:tailwindcss-icon.svg'
   },
   {
     name: 'Pinia',
     type: '状态管理',
     desc: 'Vue 官方推荐的状态管理库，轻量、类型安全',
     icon: '🍍',
-    color: 'linear-gradient(135deg, #ffd859 0%, #ffb800 100%)'
+    color: 'linear-gradient(135deg, #ffd859 0%, #ffb800 100%)',
+    logo: 'https://api.iconify.design/logos:pinia.svg'
   }
 ])
 
@@ -121,42 +128,48 @@ const row2 = ref([
     type: 'Web 服务器',
     desc: '高性能 HTTP 服务器和反向代理，负载均衡',
     icon: '🌐',
-    color: 'linear-gradient(135deg, #009639 0%, #007a2f 100%)'
+    color: 'linear-gradient(135deg, #009639 0%, #007a2f 100%)',
+    logo: 'https://api.iconify.design/logos:nginx.svg'
   },
   {
     name: 'Node.js',
     type: '运行时环境',
     desc: '基于 Chrome V8 引擎的 JavaScript 运行时',
     icon: '🟢',
-    color: 'linear-gradient(135deg, #68a063 0%, #44883e 100%)'
-  },
-  {
-    name: 'Express',
-    type: 'Web 框架',
-    desc: 'Node.js 最流行的 Web 框架，简洁灵活',
-    icon: '🚂',
-    color: 'linear-gradient(135deg, #000000 0%, #353535 100%)'
-  },
-  {
-    name: 'MongoDB',
-    type: 'NoSQL 数据库',
-    desc: '文档型数据库，灵活的数据模型，适合快速迭代',
-    icon: '🍃',
-    color: 'linear-gradient(135deg, #4db33d 0%, #3fa037 100%)'
+    color: 'linear-gradient(135deg, #68a063 0%, #44883e 100%)',
+    logo: 'https://api.iconify.design/logos:nodejs-icon.svg'
   },
   {
     name: 'Docker',
     type: '容器化平台',
     desc: '轻量级容器技术，简化应用部署，保证环境一致性',
     icon: '🐳',
-    color: 'linear-gradient(135deg, #2496ed 0%, #0db7ed 100%)'
+    color: 'linear-gradient(135deg, #2496ed 0%, #0db7ed 100%)',
+    logo: 'https://api.iconify.design/logos:docker-icon.svg'
   },
   {
     name: 'Redis',
     type: '缓存数据库',
     desc: '高性能键值存储，支持多种数据结构',
     icon: '🔴',
-    color: 'linear-gradient(135deg, #dc382d 0%, #a32422 100%)'
+    color: 'linear-gradient(135deg, #dc382d 0%, #a32422 100%)',
+    logo: 'https://api.iconify.design/logos:redis.svg'
+  },
+  {
+    name: 'MongoDB',
+    type: 'NoSQL 数据库',
+    desc: '文档型数据库，灵活的数据模型，适合快速迭代',
+    icon: '🍃',
+    color: 'linear-gradient(135deg, #4db33d 0%, #3fa037 100%)',
+    logo: 'https://api.iconify.design/logos:mongodb-icon.svg'
+  },
+  {
+    name: 'Git',
+    type: '版本控制',
+    desc: '分布式版本控制系统，团队协作必备工具',
+    icon: '�',
+    color: 'linear-gradient(135deg, #f05032 0%, #c9302c 100%)',
+    logo: 'https://api.iconify.design/logos:git-icon.svg'
   }
 ])
 </script>
@@ -195,13 +208,23 @@ const row2 = ref([
 }
 
 @keyframes scroll-left {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 @keyframes scroll-right {
-  0% { transform: translateX(-50%); }
-  100% { transform: translateX(0); }
+  0% {
+    transform: translateX(-50%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
 }
 
 .tech-card {
