@@ -16,8 +16,9 @@ export default defineUserConfig({
   theme: defaultTheme({
     navbar: [
       { text: '首页', link: '/' },
-      { text: '工具导航', link: '/tools/' },
-      { text: '技术沉淀', link: '/tech/' },
+      { text: '计算机技术', link: '/tech/' },
+      { text: '新媒体运营', link: '/media/' },
+      { text: '跨境电商', link: '/ecommerce/' },
       { text: '关于', link: '/about/' }
     ],
     sidebar: 'auto'
