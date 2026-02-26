@@ -1,12 +1,6 @@
-# 新媒体运营
+---
+sidebar: false
+pageClass: custom-nav-page
+---
 
-这里将分享新媒体运营的策略和经验。
-
-## 内容方向
-
-- 小红书运营
-- 抖音营销
-- 公众号写作
-- 数据分析
-
-敬请期待...
+<MediaResources />
