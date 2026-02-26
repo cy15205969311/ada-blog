@@ -9,7 +9,10 @@
 
       <!-- 分类卡片区域 -->
       <div v-for="category in techData" :key="category.category" class="category-block">
-        <div class="category-title">{{ category.category }}</div>
+        <div class="category-title">
+          {{ category.category }}
+          <span class="category-count">{{ category.items.length }}</span>
+        </div>
         <div class="card-grid">
           <div v-for="item in category.items" :key="item.title" @click="openLink(item.link)" class="tech-card">
             <div class="card-header">
@@ -29,6 +32,8 @@
           </div>
         </div>
       </div>
+      <SiteFooter />
+
     </div>
   </div>
 </template>
@@ -99,6 +104,24 @@ const openLink = (url) => {
   padding-left: 10px;
   border-left: 4px solid #3eaf7c;
   line-height: 1.2;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.category-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 8px;
+  background: #3eaf7c;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 12px;
+  line-height: 1;
 }
 
 .card-grid {
