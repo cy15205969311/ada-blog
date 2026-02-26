@@ -4,13 +4,13 @@
     <div class="marquee-container">
       <div class="marquee-content">
         <div class="marquee-item" v-for="i in 2" :key="i">
-          <span>Vue 3</span> <span class="dot">•</span>
-          <span>Vite</span> <span class="dot">•</span>
-          <span>TypeScript</span> <span class="dot">•</span>
-          <span>Shadcn UI</span> <span class="dot">•</span>
-          <span>Magic UI</span> <span class="dot">•</span>
-          <span>Tailwind CSS</span> <span class="dot">•</span>
-          <span>VuePress</span> <span class="dot">•</span>
+          <span>Vue 3</span> <span class="sparkle">✦</span>
+          <span>Vite</span> <span class="sparkle">✦</span>
+          <span>TypeScript</span> <span class="sparkle">✦</span>
+          <span>Shadcn UI</span> <span class="sparkle">✦</span>
+          <span>Magic UI</span> <span class="sparkle">✦</span>
+          <span>Tailwind CSS</span> <span class="sparkle">✦</span>
+          <span>VuePress</span> <span class="sparkle">✦</span>
         </div>
       </div>
     </div>
@@ -37,17 +37,21 @@
   overflow: hidden;
 }
 
-/* --- Magic UI 风格跑马灯 (纯 CSS 实现) --- */
+/* --- 极其精致的轨道容器 --- */
 .marquee-container {
   width: 100%;
-  padding: 2rem 0;
+  padding: 1.5rem 0;
+  /* 关键：大幅收缩上下内边距，从巨大横幅变成精致字条 */
   display: flex;
   overflow: hidden;
   user-select: none;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
-  /* 两侧添加高级的褪晕遮罩，让文字像从虚无中滑出 */
-  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  /* 增强物理轨道感：加深边框，加入极浅的对比背景色 */
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  background: rgba(0, 0, 0, 0.015);
+  /* 保持两端高级渐隐 */
+  mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
 }
 
 .marquee-content {
@@ -56,31 +60,49 @@
   align-items: center;
   justify-content: space-around;
   min-width: 100%;
-  gap: 2rem;
-  /* 执行无限滚动动画 */
-  animation: scrollX 20s linear infinite;
+  gap: 2.5rem;
+  /* 收紧间距配合小字号 */
+  animation: scrollX 30s linear infinite;
 
   &:hover {
     animation-play-state: paused;
-    /* 鼠标悬浮时暂停滚动 */
   }
 }
 
+/* --- 锐利的岩灰文字与品牌星芒 --- */
 .marquee-item {
   display: flex;
   align-items: center;
-  gap: 2rem;
-  font-size: 1.2rem;
+  gap: 2.5rem;
+  /* 关键：大幅缩小字号，回归高级感 */
+  font-size: 1.05rem;
   font-weight: 700;
-  color: var(--c-text-light);
-  /* 低调的灰色 */
+  /* 关键修复：明亮模式下的极简岩灰色 (Slate 400) */
+  color: #94a3b8;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   white-space: nowrap;
+  transition: color 0.3s ease;
 
-  .dot {
+  /* 悬浮时字体变深 (Slate 600)，增加对比度 */
+  &:hover {
+    color: #475569;
+  }
+
+  /* 精致的星芒点缀 */
+  .sparkle {
+    font-size: 1rem;
+    font-weight: 400;
     color: #3eaf7c;
-    /* 品牌色点缀 */
+    /* 品牌绿 */
+    opacity: 0.8;
+    /* 提高可见度 */
+    transition: transform 0.4s ease, filter 0.4s ease;
+  }
+
+  &:hover .sparkle {
+    transform: rotate(45deg) scale(1.1);
+    filter: brightness(1.1);
   }
 }
 
@@ -91,7 +113,7 @@
   }
 
   to {
-    transform: translateX(calc(-100% - 2rem));
+    transform: translateX(calc(-100% - 2.5rem));
   }
 }
 
@@ -131,8 +153,8 @@
   }
 
   .marquee-item {
-    font-size: 1rem;
-    gap: 1.5rem;
+    font-size: 0.9rem;
+    gap: 2rem;
   }
 }
 </style>
