@@ -33,7 +33,7 @@
           </div>
         </div>
       </div>
-      <SiteFooter />
+      <SiteFooter :items="getAllItems()" />
 
     </div>
   </div>
@@ -47,6 +47,15 @@ const openLink = (url) => {
   if (url) {
     window.open(url, '_blank', 'noopener,noreferrer');
   }
+};
+
+// 获取所有项目用于页脚跑马灯
+const getAllItems = () => {
+  const allItems = [];
+  techData.forEach(category => {
+    allItems.push(...category.items);
+  });
+  return allItems;
 };
 </script>
 

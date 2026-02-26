@@ -4,22 +4,35 @@
     <div class="marquee-container">
       <div class="marquee-content">
         <div class="marquee-item" v-for="i in 2" :key="i">
-          <span>Vue 3</span> <span class="sparkle">✦</span>
-          <span>Vite</span> <span class="sparkle">✦</span>
-          <span>TypeScript</span> <span class="sparkle">✦</span>
-          <span>Shadcn UI</span> <span class="sparkle">✦</span>
-          <span>Magic UI</span> <span class="sparkle">✦</span>
-          <span>Tailwind CSS</span> <span class="sparkle">✦</span>
-          <span>VuePress</span> <span class="sparkle">✦</span>
+          <template v-if="items && items.length > 0">
+            <template v-for="(item, index) in items" :key="`item-${i}-${index}`">
+              <span>{{ item.title }}</span>
+              <span class="sparkle">✦</span>
+            </template>
+          </template>
+          <template v-else>
+            <span>Vue 3</span> <span class="sparkle">✦</span>
+            <span>Vite</span> <span class="sparkle">✦</span>
+            <span>TypeScript</span> <span class="sparkle">✦</span>
+            <span>Shadcn UI</span> <span class="sparkle">✦</span>
+            <span>Magic UI</span> <span class="sparkle">✦</span>
+            <span>Tailwind CSS</span> <span class="sparkle">✦</span>
+            <span>VuePress</span> <span class="sparkle">✦</span>
+          </template>
         </div>
       </div>
     </div>
-
   </footer>
 </template>
 
 <script setup>
-// 纯 CSS 动画实现，无需 JS 逻辑
+// 接收外部传入的数据
+const props = defineProps({
+  items: {
+    type: Array,
+    default: () => []
+  }
+});
 </script>
 
 <style lang="scss" scoped>
@@ -30,9 +43,7 @@
   left: 50%;
   transform: translateX(-50%);
   margin-top: 6rem;
-  /* 与上方内容拉开距离 */
   background: var(--c-bg-light);
-  /* 使用稍微深一点点的底色区分内容区 */
   border-top: 1px solid var(--c-border);
   overflow: hidden;
 }
@@ -41,15 +52,12 @@
 .marquee-container {
   width: 100%;
   padding: 1.5rem 0;
-  /* 关键：大幅收缩上下内边距，从巨大横幅变成精致字条 */
   display: flex;
   overflow: hidden;
   user-select: none;
-  /* 增强物理轨道感：加深边框，加入极浅的对比背景色 */
   border-top: 1px solid rgba(0, 0, 0, 0.05);
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   background: rgba(0, 0, 0, 0.015);
-  /* 保持两端高级渐隐 */
   mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
   -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
 }
@@ -61,7 +69,6 @@
   justify-content: space-around;
   min-width: 100%;
   gap: 2.5rem;
-  /* 收紧间距配合小字号 */
   animation: scrollX 30s linear infinite;
 
   &:hover {
@@ -74,29 +81,23 @@
   display: flex;
   align-items: center;
   gap: 2.5rem;
-  /* 关键：大幅缩小字号，回归高级感 */
   font-size: 1.05rem;
   font-weight: 700;
-  /* 关键修复：明亮模式下的极简岩灰色 (Slate 400) */
   color: #94a3b8;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   white-space: nowrap;
   transition: color 0.3s ease;
 
-  /* 悬浮时字体变深 (Slate 600)，增加对比度 */
   &:hover {
     color: #475569;
   }
 
-  /* 精致的星芒点缀 */
   .sparkle {
     font-size: 1rem;
     font-weight: 400;
     color: #3eaf7c;
-    /* 品牌绿 */
     opacity: 0.8;
-    /* 提高可见度 */
     transition: transform 0.4s ease, filter 0.4s ease;
   }
 
@@ -121,7 +122,6 @@
 .footer-bottom {
   padding: 2rem;
   background: var(--c-bg);
-  /* 恢复纯色 */
 }
 
 .footer-inner {
@@ -129,7 +129,6 @@
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
-  /* 左右两端对齐 */
   align-items: center;
   flex-wrap: wrap;
   gap: 1rem;
@@ -140,7 +139,6 @@
   margin: 0;
   font-size: 0.85rem;
   color: var(--c-text-lighter);
-  /* 极度克制的淡灰色 */
   font-weight: 500;
 }
 
