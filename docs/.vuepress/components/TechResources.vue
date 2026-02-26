@@ -79,16 +79,15 @@ const openLink = (url) => {
   display: flex;
   flex-direction: column;
   padding: 1.25rem;
-  background: var(--c-bg-light);
-  border: 1px solid var(--c-border);
+  background: #ffffff;
+  border: 1px solid #e5e7eb !important;
   border-radius: 8px;
   cursor: pointer;
-  /* 补充指针样式 */
   transition: all 0.2s ease;
   box-sizing: border-box;
 
   &:hover {
-    border-color: #3eaf7c;
+    border-color: #3eaf7c !important;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
     transform: translateY(-2px);
   }

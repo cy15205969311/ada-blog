@@ -96,7 +96,7 @@ export const techData = [
         title: "Aceternity UI",
         desc: "现代化的 React 和 Tailwind CSS 和 Framer Motion 组件",
         link: "https://ui.aceternity.com/",
-        icon: "https://ui.aceternity.com/_next/image?url=%2Flogo.png&w=64&q=75"
+        icon: "https://ui.aceternity.com/logo.png"
       },
       {
         title: "DaisyUI",
@@ -119,7 +119,7 @@ export const techData = [
         title: "MyBatis-Plus",
         desc: "MyBatis 的增强工具，在 MyBatis 的基础上只做增强不做改变",
         link: "https://baomidou.com/",
-        icon: "https://baomidou.com/img/logo.svg"
+        icon: "https://baomidou.com/assets/asset.cIbiVTt_.svg"
       },
       {
         title: "Redis",
