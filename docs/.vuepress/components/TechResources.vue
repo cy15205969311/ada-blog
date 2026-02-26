@@ -4,6 +4,7 @@
       <!-- 顶部标题区域 -->
       <div class="page-header">
         <h1 class="page-title">计算机技术</h1>
+        <hr>
         <p class="page-desc">收录常用的技术框架、组件库和开发工具，方便快速查阅。</p>
       </div>
 
@@ -85,7 +86,7 @@ const openLink = (url) => {
   color: var(--c-text);
   margin: 0 0 0.5rem 0;
   padding-bottom: 0.75rem;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--c-border);
   line-height: 1.3;
 }
 
@@ -138,27 +139,31 @@ const openLink = (url) => {
   }
 }
 
-/* --- 纯净的卡片样式 --- */
+/* --- 修复一：卡片容器全面拥抱自适应变量 --- */
 .tech-card {
-  display: flex;
-  flex-direction: column;
-  padding: 1.5rem;
-  background: #ffffff;
-  border: 1px solid #e5e7eb !important;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-sizing: border-box;
-  min-height: 120px;
-  position: relative;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  padding: 1.5rem !important;
+  /* 关键修复：移除死板的 #ffffff，改用自适应卡片底色 */
+  background: var(--c-bg-light) !important;
+  /* 关键修复：使用明确的边框颜色，确保明暗模式都可见 */
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  border-radius: 8px !important;
+  text-decoration: none !important;
+  transition: all 0.2s ease !important;
+  box-sizing: border-box !important;
+  min-height: 120px !important;
+  position: relative !important;
+  cursor: pointer !important;
 
   &:hover {
     border-color: #3eaf7c !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+    transform: translateY(-2px) !important;
 
     .external-link-icon {
-      opacity: 1;
+      opacity: 1 !important;
     }
   }
 }
@@ -202,21 +207,46 @@ const openLink = (url) => {
   background: transparent;
 }
 
+/* --- 修复二：文字颜色解除硬编码 --- */
 .title {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--c-text);
-  line-height: 1;
+  font-size: 1.05rem !important;
+  font-weight: 600 !important;
+  /* 关键修复：移除死板的 #111827，使用自适应主文本色 */
+  color: var(--c-text) !important;
+  margin: 0 !important;
+  line-height: 1 !important;
+  display: block !important;
 }
 
 .desc {
-  font-size: 0.85rem;
-  color: var(--c-text-light);
-  line-height: 1.5;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  font-size: 0.85rem !important;
+  /* 关键修复：移除死板的 #6b7280，使用自适应次级文本色 */
+  color: var(--c-text-light) !important;
+  margin: 0 !important;
+  line-height: 1.5 !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+}
+
+/* --- 终极质感：暗黑模式专属微调 (兼容 VuePress 2) --- */
+/* 双重选择器保险，确保绝对生效 */
+html[data-theme='dark'] .tech-card,
+html.dark .tech-card {
+  /* 关键修复：提高白色透明度至 0.15，让边框在黑夜中清晰可见 */
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  /* 稍微提亮卡片背景，让卡片比底层背景"浮"起来一层 */
+  background: rgba(255, 255, 255, 0.04) !important;
+
+  &:hover {
+    border-color: #3eaf7c !important;
+    /* 保持 Vue 绿高亮 */
+    /* 悬浮时背景再微亮一点点，产生交互呼吸感 */
+    background: rgba(255, 255, 255, 0.07) !important;
+    /* 更深邃的黑色阴影托底 */
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6) !important;
+  }
 }
 </style>
