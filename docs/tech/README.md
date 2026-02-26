@@ -1,12 +1,10 @@
+---
+sidebar: false
+pageClass: custom-nav-page
+---
+
 # 计算机技术
 
-这里将分享计算机专业相关的技术文章和教程。
+<p style="color: var(--c-text-light, #6b7280); font-size: 0.95rem; margin-bottom: 3rem;">收录常用的技术框架、组件库和开发工具，方便快速查阅。</p>
 
-## 内容方向
-
-- 前端开发
-- 后端架构
-- 数据库设计
-- 开发工具
-
-敬请期待...
+<TechResources />
