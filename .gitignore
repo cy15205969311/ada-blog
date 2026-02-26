@@ -1,0 +1,11 @@
+node_modules/
+.temp/
+.cache/
+dist/
+.DS_Store
+*.log
+pnpm-lock.yaml
+docs/.vuepress/.temp/
+docs/.vuepress/.cache/
+docs/.vuepress/dist/
+node_modules

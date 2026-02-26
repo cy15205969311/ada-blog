@@ -1,0 +1,15 @@
+// 核心越狱类：任何带有这个类的组件，将无视 VuePress 的宽度限制，直达屏幕边缘
+.full-bleed-breakout {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
+
+// 优化默认容器，保证普通 Markdown 阅读体验
+.theme-default-content:not(.custom) {
+  max-width: 800px !important;
+  margin: 0 auto;
+}
