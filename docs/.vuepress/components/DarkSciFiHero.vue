@@ -48,11 +48,9 @@
 <script setup>
 import { ref, reactive, onMounted, onUnmounted, nextTick } from 'vue';
 
-// --- 状态定义 ---
-const isLoaded = ref(false); // 控制入场动画的发令枪
-let ticking = false; // 用于 rAF 节流
+const isLoaded = ref(false);
+let ticking = false;
 
-// 定义各图层的视差样式对象 (使用 reactive 获得更好的性能)
 const parallaxStyle = reactive({
   sky: { transform: 'translate3d(0,0,0)' },
   sun: { transform: 'translate3d(0,0,0)' },
@@ -61,34 +59,33 @@ const parallaxStyle = reactive({
   mouse: { opacity: 1 }
 });
 
-// --- 核心逻辑：高性能滚动监听 ---
 const handleScroll = () => {
   if (!ticking) {
     window.requestAnimationFrame(() => {
       const scrollY = window.scrollY;
 
-      // 如果滚出首屏太远，停止计算以节省性能
+      /* ==========================================
+         核心修复：动态切换导航栏的置顶状态
+      ========================================== */
+      if (scrollY > 50) {
+        document.documentElement.classList.remove('is-hero-top');
+      } else {
+        document.documentElement.classList.add('is-hero-top');
+      }
+
       if (scrollY > 1200) {
         ticking = false;
         return;
       }
 
-      // --- 计算视差参数 (核心数学公式) ---
-      // 天空：极慢向下 (系数 0.15)
       parallaxStyle.sky.transform = `translate3d(0, ${scrollY * 0.15}px, 0)`;
-
-      // 太阳：较快向下坠落 (系数 0.5)
       parallaxStyle.sun.transform = `translate3d(0, ${scrollY * 0.5}px, 0)`;
-
-      // 山脉：轻微向上反向移动 (系数 -0.1)
       parallaxStyle.mountain.transform = `translate3d(0, ${-scrollY * 0.1}px, 0)`;
 
-      // 内容：中速跟随 (系数 0.3) + 快速透明消失 (滚到 300px 时完全消失)
       const contentOpacity = Math.max(1 - scrollY / 300, 0);
       parallaxStyle.content.transform = `translate3d(0, ${scrollY * 0.3}px, 0)`;
       parallaxStyle.content.opacity = contentOpacity;
 
-      // 鼠标：一滚动立刻消失 (滚到 100px 时完全消失)
       parallaxStyle.mouse.opacity = Math.max(1 - scrollY / 100, 0);
 
       ticking = false;
@@ -97,21 +94,18 @@ const handleScroll = () => {
   }
 };
 
-// --- 生命周期钩子 ---
 onMounted(() => {
-  // 1. 启动 JS 发令枪，解决水合问题，触发 CSS 入场动画
-  // 延迟 100ms 确保浏览器完成首次绘制
-  setTimeout(() => {
-    isLoaded.value = true;
-  }, 100);
+  // 初始化：强制给 html 加上置顶类名
+  document.documentElement.classList.add('is-hero-top');
 
-  // 2. 添加滚动监听
-  nextTick(() => {
-    window.addEventListener('scroll', handleScroll, { passive: true });
-  });
+  setTimeout(() => { isLoaded.value = true; }, 100);
+
+  nextTick(() => { window.addEventListener('scroll', handleScroll, { passive: true }); });
 });
 
 onUnmounted(() => {
+  // 离开首屏组件时：务必清理掉类名，恢复正常导航栏
+  document.documentElement.classList.remove('is-hero-top');
   window.removeEventListener('scroll', handleScroll);
 });
 </script>

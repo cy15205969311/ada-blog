@@ -1,546 +1,75 @@
-// 核心越狱类：任何带有这个类的组件，将无视 VuePress 的宽度限制，直达屏幕边缘
-.full-bleed-breakout {
-  width: 100vw;
-  position: relative;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
-}
-
-// 优化默认容器，保证普�?Markdown 阅读体验
-.theme-default-content:not(.custom) {
-  max-width: 800px !important;
-  margin: 0 auto;
-}
-
-
-/* --- 页脚居中样式 --- */
-.vp-page-meta,
-footer.vp-page-meta {
-  text-align: center !important;
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-.page-meta,
-.page-meta .meta-item {
-  text-align: center !important;
-  justify-content: center !important;
-}
-
-.page-meta {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-
-/* ========================================
-   现代深邃暗黑模式 UI 升级
-   参�?Vercel / Linear 设计语言
-======================================== */
-
-/* --- 1. 全局深邃背景渐变 --- */
-:root {
-  --gradient-bg-start: #0a0e27;
-  --gradient-bg-mid: #1a1f3a;
-  --gradient-bg-end: #0f1419;
-  --cyan-glow: #00f0ff;
-  --purple-glow: #a78bfa;
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --glass-bg: rgba(255, 255, 255, 0.05);
-}
-
-/* 首页整体背景 - 深邃渐变 */
-.home {
-  background: radial-gradient(ellipse at top,
-      var(--gradient-bg-mid) 0%,
-      var(--gradient-bg-start) 50%,
-      var(--gradient-bg-end) 100%);
-  min-height: 100vh;
-}
-
-/* --- 2. Hero 区域增强 --- */
-.home .hero {
-  padding: 6rem 2rem 4rem !important;
-  background: transparent !important;
-  position: relative;
-  overflow: hidden;
-
-  /* 添加科技感网格纹�?*/
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image:
-      linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
-    background-size: 50px 50px;
-    opacity: 0.3;
-    pointer-events: none;
-  }
-
-  /* 添加光晕效果 */
-  &::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 800px;
-    height: 800px;
-    background: radial-gradient(circle,
-        rgba(0, 240, 255, 0.15) 0%,
-        rgba(167, 139, 250, 0.1) 30%,
-        transparent 70%);
-    pointer-events: none;
-    z-index: 0;
-  }
-}
-
-/* Hero 标题增强 - 巨大渐变文字 */
-.home .hero h1 {
-  font-size: clamp(3rem, 8vw, 5.5rem) !important;
-  font-weight: 800 !important;
-  line-height: 1.1 !important;
-  margin-bottom: 1.5rem !important;
-  background: linear-gradient(135deg,
-      #00f0ff 0%,
-      #a78bfa 50%,
-      #00f0ff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  position: relative;
-  z-index: 1;
-}
-
-/* Hero 副标�?*/
-.home .hero .description {
-  font-size: 1.4rem !important;
-  color: rgba(255, 255, 255, 0.7) !important;
-  max-width: 600px !important;
-  margin: 0 auto 3rem !important;
-  position: relative;
-  z-index: 1;
-}
-
-/* --- 3. 按钮现代�?--- */
-.home .hero .actions {
-  position: relative;
-  z-index: 1;
-}
-
-/* 主按�?- 发光效果 */
-.home .hero .action-button.primary {
-  background: linear-gradient(135deg, #00f0ff 0%, #00d4e6 100%) !important;
-  color: #0a0e27 !important;
-  font-weight: 600 !important;
-  padding: 0.9rem 2.5rem !important;
-  border-radius: 8px !important;
-  border: none !important;
-  box-shadow: 0 0 30px rgba(0, 240, 255, 0.4),
-    0 4px 12px rgba(0, 0, 0, 0.3) !important;
-  transition: all 0.3s ease !important;
-
-  &:hover {
-    transform: translateY(-2px) !important;
-    box-shadow: 0 0 40px rgba(0, 240, 255, 0.6),
-      0 8px 20px rgba(0, 0, 0, 0.4) !important;
-  }
-}
-
-/* 次要按钮 - 毛玻璃效�?*/
-.home .hero .action-button:not(.primary) {
-  background: rgba(255, 255, 255, 0.05) !important;
-  backdrop-filter: blur(10px) !important;
-  -webkit-backdrop-filter: blur(10px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  color: rgba(255, 255, 255, 0.9) !important;
-  padding: 0.9rem 2.5rem !important;
-  border-radius: 8px !important;
-  transition: all 0.3s ease !important;
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.1) !important;
-    border-color: rgba(0, 240, 255, 0.3) !important;
-    transform: translateY(-2px) !important;
-  }
-}
-
-/* --- 4. Features 卡片 - 毛玻璃拟�?--- */
-.home .features {
-  padding: 4rem 2rem !important;
-  max-width: 1200px !important;
-  margin: 0 auto !important;
-}
-
-.home .feature {
-  background: rgba(255, 255, 255, 0.05) !important;
-  backdrop-filter: blur(10px) !important;
-  -webkit-backdrop-filter: blur(10px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  border-radius: 12px !important;
-  padding: 2rem !important;
-  transition: all 0.3s ease !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
-
-  /* 悬停交互 */
-  &:hover {
-    transform: translateY(-8px) !important;
-    border-color: rgba(0, 240, 255, 0.3) !important;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4),
-      0 0 20px rgba(0, 240, 255, 0.2) !important;
-    background: rgba(255, 255, 255, 0.08) !important;
-  }
-
-  h2 {
-    color: rgba(255, 255, 255, 0.95) !important;
-    font-weight: 600 !important;
-    font-size: 1.3rem !important;
-    margin-bottom: 0.8rem !important;
-  }
-
-  p {
-    color: rgba(255, 255, 255, 0.7) !important;
-    line-height: 1.6 !important;
-  }
-}
-
-/* --- 5. 导航栏透明�?--- */
-.navbar {
-  background: transparent !important;
-  backdrop-filter: blur(10px) !important;
-  -webkit-backdrop-filter: blur(10px) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
-  transition: all 0.3s ease !important;
-
-  /* 滚动后添加背�?*/
-  &.scrolled {
-    background: rgba(10, 14, 39, 0.8) !important;
-    border-bottom-color: rgba(255, 255, 255, 0.1) !important;
-  }
-}
-
-/* 导航链接颜色 */
-.navbar .nav-links a {
-  color: rgba(255, 255, 255, 0.8) !important;
-
-  &:hover,
-  &.router-link-active {
-    color: var(--cyan-glow) !important;
-  }
-}
-
-/* --- 6. 内容区域优化 --- */
-.theme-default-content {
-  background: transparent !important;
-  color: rgba(255, 255, 255, 0.85) !important;
-
-  h2,
-  h3,
-  h4 {
-    color: rgba(255, 255, 255, 0.95) !important;
-    border-bottom-color: rgba(255, 255, 255, 0.1) !important;
-  }
-
-  code {
-    background: rgba(0, 240, 255, 0.1) !important;
-    color: var(--cyan-glow) !important;
-    border-radius: 4px !important;
-  }
-
-  pre {
-    background: rgba(0, 0, 0, 0.3) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    border-radius: 8px !important;
-  }
-}
-
-/* --- 7. 页脚优化 --- */
-.page-meta,
-footer {
-  background: transparent !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
-  color: rgba(255, 255, 255, 0.6) !important;
-}
-
-/* --- 8. 响应式优�?--- */
-@media (max-width: 768px) {
-  .home .hero h1 {
-    font-size: clamp(2rem, 10vw, 3rem) !important;
-  }
-
-  .home .hero .description {
-    font-size: 1.1rem !important;
-  }
-
-  .home .hero .actions {
-    flex-direction: column !important;
-    gap: 1rem !important;
-
-    .action-button {
-      width: 100% !important;
-      max-width: 300px !important;
-    }
-  }
-}
-
-
-/* --- 专用的高级毛玻璃类，�?JS 挂载 --- */
-.is-nav-frosted {
-  --c-bg-navbar: rgba(255, 255, 255, 0.8) !important;
-  background-color: var(--c-bg-navbar) !important;
-  backdrop-filter: blur(16px) !important;
-  -webkit-backdrop-filter: blur(16px) !important;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03) !important;
-}
-
-/* 暗黑模式适配 */
-html[data-theme='dark'] .is-nav-frosted,
-html.dark .is-nav-frosted {
-  --c-bg-navbar: rgba(18, 18, 20, 0.8) !important;
-  background-color: var(--c-bg-navbar) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
-}
-
-
-/* --- 导航栏文字颜色优化，适配清新治愈风背�?--- */
-
-/* 当导航栏透明时（首页顶部），使用白色文字以适配蓝灰背景 */
-.navbar:not(.is-nav-frosted) {
-
-  .site-name,
-  .navbar-items a,
-  .navbar-items span,
-  .nav-link {
-    color: rgba(255, 255, 255, 0.95) !important;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  }
-
-  /* 悬停效果 */
-  .navbar-items a:hover,
-  .nav-link:hover {
-    color: #ffffff !important;
-  }
-
-  /* 激活状�?*/
-  .navbar-items a.router-link-active,
-  .nav-link.router-link-active {
-    color: #42f593 !important;
-    text-shadow: 0 0 10px rgba(66, 245, 147, 0.3);
-  }
-}
-
-/* 滚动后的毛玻璃状态，使用深色文字 */
-.navbar.is-nav-frosted {
-
-  .site-name,
-  .navbar-items a,
-  .navbar-items span,
-  .nav-link {
-    color: rgba(0, 0, 0, 0.85) !important;
-    text-shadow: none;
-  }
-
-  .navbar-items a:hover,
-  .nav-link:hover {
-    color: rgba(0, 0, 0, 1) !important;
-  }
-
-  .navbar-items a.router-link-active,
-  .nav-link.router-link-active {
-    color: #00a67d !important;
-  }
-}
-
-/* 暗黑模式下的毛玻璃文�?*/
-html[data-theme='dark'] .navbar.is-nav-frosted,
-html.dark .navbar.is-nav-frosted {
-
-  .site-name,
-  .navbar-items a,
-  .navbar-items span,
-  .nav-link {
-    color: rgba(255, 255, 255, 0.9) !important;
-  }
-
-  .navbar-items a:hover,
-  .nav-link:hover {
-    color: rgba(255, 255, 255, 1) !important;
-  }
-
-  .navbar-items a.router-link-active,
-  .nav-link.router-link-active {
-    color: #42f593 !important;
-  }
-}
-
-
-/* --- 修复：首页透明导航栏的专属高对比度文字 --- */
-/* 当且仅当导航栏拥�?is-nav-transparent 时生�?*/
-.navbar.is-nav-transparent {
-  /* 暴力覆写 VuePress 的全局文本变量为深岩灰�?*/
-  --c-text: #1e293b !important;
-  --c-text-light: #334155 !important;
-  --c-text-lighter: #475569 !important;
-
-  /* 针对具体的标签做双重保险 */
-  .site-name,
-  .nav-link,
-  .title,
-  .toggle-color-mode-button,
-  .toggle-sidebar-button,
-  .repo-link {
-    color: #1e293b !important;
-    /* 强制深色 */
-    font-weight: 700 !important;
-    /* 稍微加粗，提升在渐变背景上的可读�?*/
-    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.4) !important;
-    /* 加一层极微弱的白光描边，防止被背景吞�?*/
-    transition: color 0.2s ease !important;
-  }
-
-  /* 悬浮时的品牌�?*/
-  .nav-link:hover,
-  .site-name:hover,
-  .toggle-color-mode-button:hover,
-  .repo-link:hover {
-    color: #3eaf7c !important;
-  }
-}
-
-
-/* --- 终极文本覆写：只要在首页最顶部，强制深�?--- */
-body.is-home-top {
-
-  .navbar,
-  .vp-navbar {
-    /* 强制覆盖顶层变量 */
-    --c-text: #1e293b !important;
-    --c-text-light: #334155 !important;
-
-    /* 针对极其固执的深层链接、标题、按钮图标进行精确打�?*/
-    .site-name,
-    .vp-site-name,
-    .nav-link,
-    .vp-nav-link,
-    .nav-item>a,
-    .vp-nav-item>a,
-    .title,
-    .icon,
-    button {
-      color: #1e293b !important;
-      /* 深岩灰色 */
-      font-weight: 700 !important;
-      /* 核心修复：加一圈极其柔和的白色辉光，确保在任何背景图上都绝对清�?*/
-      text-shadow: 0 0 4px rgba(255, 255, 255, 0.9), 0 0 10px rgba(255, 255, 255, 0.7) !important;
-      transition: color 0.2s ease !important;
-    }
-
-    /* 针对暗黑模式切换�?SVG 图标特殊处理 */
-    svg {
-      fill: #1e293b !important;
-      color: #1e293b !important;
-      filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.9)) !important;
-    }
-
-    /* 悬停时的品牌绿交�?*/
-    .nav-link:hover,
-    .vp-nav-link:hover,
-    .site-name:hover,
-    .vp-site-name:hover,
-    button:hover,
-    button:hover svg {
-      color: #3eaf7c !important;
-      fill: #3eaf7c !important;
-    }
-  }
-}
-
-
 /* ==========================================
-/* ==========================================
-   �ռ��ع�����ҹ�ö���͸ + ����״̬���Զ���
+   一、终极防弹导航栏 (双轨类名覆盖，绝不漏网)
 ========================================== */
 
-/* 1. ��ҳ��� (�ö�״̬)��ǿ��͸������������ */
-html.is-hero-top body #app .navbar,
-html.is-hero-top body #app .vp-navbar,
-html[data-theme='dark'].is-hero-top body #app .navbar,
-html.dark.is-hero-top body #app .navbar {
-  background-color: transparent !important;
-  border-bottom: none !important;
-  box-shadow: none !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
+/* 1. 基础滚动状态 (白天模式) - 白底毛玻璃 */
+body #app .navbar,
+body #app .vp-navbar {
+  background: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: saturate(150%) blur(20px) !important;
+  -webkit-backdrop-filter: saturate(150%) blur(20px) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+  transition: all 0.3s ease !important;
 }
 
-/* ����������Զ�ǰ�ɫ */
-html.is-hero-top body #app .navbar *,
-html.is-hero-top body #app .vp-navbar *,
-html[data-theme='dark'].is-hero-top body #app .navbar *,
-html.dark.is-hero-top body #app .navbar * {
-  color: rgba(255, 255, 255, 0.95) !important;
-  fill: rgba(255, 255, 255, 0.95) !important;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15) !important;
-  font-weight: 600 !important;
-}
-
-/* 2. �뿪���������󣺱�������Ӧ�ں� */
-html:not(.is-hero-top) body #app .navbar,
-html:not(.is-hero-top) body #app .vp-navbar {
-  background-color: color-mix(in srgb, var(--c-bg) 85%, transparent) !important;
-  backdrop-filter: saturate(150%) blur(16px) !important;
-  -webkit-backdrop-filter: saturate(150%) blur(16px) !important;
-  border-bottom: 1px solid var(--c-border) !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
-}
-
-/* 3. �����޸� A������ģʽ����������ǿ�����һ�ɫ */
-html:not([data-theme='dark']):not(.dark):not(.is-hero-top) body #app .navbar *,
-html:not([data-theme='dark']):not(.dark):not(.is-hero-top) body #app .vp-navbar *,
-html:not([data-theme='dark']):not(.dark):not(.is-hero-top) body #app .navbar a,
-html:not([data-theme='dark']):not(.dark):not(.is-hero-top) body #app .vp-navbar a {
+/* 白天滚动文字：深岩灰 */
+body #app .navbar *,
+body #app .vp-navbar * {
   color: #1e293b !important;
   fill: #1e293b !important;
-  text-shadow: none !important;
-  font-weight: 500 !important;
 }
 
-/* 4. �����޸� B������ģʽ����������ǿ�ƴ���ɫ */
-html[data-theme='dark']:not(.is-hero-top) body #app .navbar *,
-html[data-theme='dark']:not(.is-hero-top) body #app .vp-navbar *,
-html.dark:not(.is-hero-top) body #app .navbar *,
-html.dark:not(.is-hero-top) body #app .vp-navbar * {
+/* 2. 基础滚动状态 (暗黑模式) - 深空黑毛玻璃 */
+html.dark body #app .navbar,
+html.dark body #app .vp-navbar,
+html[data-theme='dark'] body #app .navbar,
+html[data-theme='dark'] body #app .vp-navbar {
+  background: rgba(15, 23, 42, 0.8) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* 暗黑滚动文字：纯白色 */
+html.dark body #app .navbar *,
+html.dark body #app .vp-navbar *,
+html[data-theme='dark'] body #app .navbar *,
+html[data-theme='dark'] body #app .vp-navbar * {
   color: #f8fafc !important;
   fill: #f8fafc !important;
-  text-shadow: none !important;
-  font-weight: 500 !important;
 }
 
-/* 5. ��ͣ���� (ȫ����Ч) */
+/* 3. 首页置顶状态 (最高优先级) - 极致透明 */
+html.is-hero-top body #app .navbar,
+html.is-hero-top body #app .vp-navbar {
+  background: transparent !important;
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
+/* 置顶文字靶向：永远空灵白 */
+html.is-hero-top body #app .navbar *,
+html.is-hero-top body #app .vp-navbar * {
+  color: rgba(255, 255, 255, 0.95) !important;
+  fill: rgba(255, 255, 255, 0.95) !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* 4. 悬停品牌绿交互 */
 body #app .navbar *:hover,
 body #app .vp-navbar *:hover {
-  color: var(--c-brand, #3eaf7c) !important;
-  fill: var(--c-brand, #3eaf7c) !important;
-  text-shadow: none !important;
+  color: #3eaf7c !important;
+  fill: #3eaf7c !important;
 }
 
-
 /* ==========================================
-   下半部分重构：SaaS 级卡片质感与呼吸感排版
+   二、被 Kiro 误删的：SaaS 级卡片质感与呼吸感排版
 ========================================== */
 
-/* 1. 特性卡片 (Features) 高级质感与悬停物理反馈 */
+/* 特性卡片 (Features) 高级质感与悬停物理反馈 */
 .vp-features {
   margin-top: 3rem !important;
   padding: 0 1rem;
@@ -550,19 +79,17 @@ body #app .vp-navbar *:hover {
   background: var(--c-bg-light) !important;
   border: 1px solid var(--c-border) !important;
   border-radius: 20px !important;
-  /* 更现代的大圆角 */
   transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1) !important;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03) !important;
 }
 
-/* 物理级悬停交互：上浮 + 品牌色发光 + 边框高亮 */
 .vp-feature:hover {
   transform: translateY(-8px) scale(1.02) !important;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08) !important;
   border-color: var(--c-brand) !important;
 }
 
-/* 暗黑模式卡片特殊光影：深空微光 */
+/* 暗黑模式卡片光影 */
 html[data-theme='dark'] .vp-feature,
 html.dark .vp-feature {
   background: rgba(255, 255, 255, 0.02) !important;
@@ -577,20 +104,17 @@ html.dark .vp-feature:hover {
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(66, 245, 147, 0.05) !important;
 }
 
-/* 2. 正文区域 (Markdown Content) 极致阅读排版 */
+/* 正文区域排版增强 */
 .theme-default-content {
   max-width: 860px !important;
-  /* 收紧阅读视宽，聚焦视线 */
   margin: 0 auto;
   padding: 4rem 2rem !important;
 }
 
-/* 标题重构：去掉生硬的下划线，改用现代感色块点缀 */
 .theme-default-content h2 {
   margin-top: 4rem;
   padding-bottom: 0.5rem;
   border-bottom: none !important;
-  /* 隐藏默认下划线 */
   position: relative;
   display: inline-block;
   font-weight: 800 !important;
@@ -604,14 +128,12 @@ html.dark .vp-feature:hover {
   width: 40px;
   height: 6px;
   background: var(--c-brand);
-  /* 品牌绿小横条 */
   border-radius: 3px;
   transition: width 0.3s ease;
 }
 
 .theme-default-content h2:hover::after {
   width: 100%;
-  /* 鼠标放上标题时，绿条会延伸 */
 }
 
 .theme-default-content h3 {
@@ -619,7 +141,7 @@ html.dark .vp-feature:hover {
   font-weight: 700 !important;
 }
 
-/* 代码块增强：增加投影和圆角 */
+/* 代码块高级立体感 */
 div[class*="language-"] {
   border-radius: 12px !important;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
