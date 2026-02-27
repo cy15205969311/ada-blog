@@ -12,8 +12,8 @@
         <div v-for="(category, cIndex) in section.categories.slice(0, 2)" :key="cIndex" class="sub-category">
           <h3 class="sub-title">{{ category.name }}</h3>
           <div class="flat-grid">
-            <a v-for="(item, iIndex) in category.items.slice(0, 4)" :key="iIndex" :href="item.link || section.link"
-              target="_blank" rel="noopener noreferrer" class="pure-flat-card">
+            <a v-for="(item, iIndex) in category.items.slice(0, 4)" :key="iIndex" :href="item.link" target="_blank"
+              rel="noopener noreferrer" class="pure-flat-card">
               <div class="card-top">
                 <div class="icon-wrapper">
                   <img v-if="item.icon" :src="item.icon" :alt="item.name" class="brand-icon">
@@ -36,80 +36,50 @@
 
 <script setup>
 import { reactive } from 'vue';
+import { techData } from '../data/techData.js';
+import { mediaData } from '../data/mediaData.js';
+import { ecommerceData } from '../data/ecommerceData.js';
 
-/* 数据源：标题已更新为资源平台风格 */
+/* 数据源：从真实数据文件导入并转换格式 */
 const resourcesData = reactive([
   {
-    title: '技术资源',
+    title: '计算机技术',
     link: '/tech/',
-    categories: [
-      {
-        name: '前端开发',
-        items: [
-          { name: 'Vue.js', desc: '渐进式 JavaScript 框架', icon: 'https://cn.vuejs.org/logo.svg' },
-          { name: 'React', desc: '用于构建用户界面的 JavaScript 库', icon: 'https://react.dev/favicon.ico' },
-          { name: 'Vite', desc: '下一代前端构建工具', icon: 'https://cn.vitejs.dev/logo.svg' },
-          { name: 'TypeScript', desc: 'JavaScript 的超集', icon: 'https://www.typescriptlang.org/favicon.ico' }
-        ]
-      },
-      {
-        name: 'UI 组件库',
-        items: [
-          { name: 'Element Plus', desc: '基于 Vue 3，面向设计师和开发者的组件库', icon: '' },
-          { name: 'Vant 4', desc: '轻量、可定制的移动端 Vue 组件库', icon: '' },
-          { name: 'Ant Design Vue', desc: 'Ant Design 的 Vue 实现', icon: '' },
-          { name: 'Tailwind CSS', desc: '实用优先的 HTML (CSS)，无需离开 CSS 框架', icon: '' }
-        ]
-      }
-    ]
+    categories: techData.map(cat => ({
+      name: cat.category,
+      items: cat.items.map(item => ({
+        name: item.title,
+        desc: item.desc,
+        icon: item.icon,
+        link: item.link
+      }))
+    }))
   },
   {
-    title: '新媒体资源',
+    title: '新媒体运营',
     link: '/media/',
-    categories: [
-      {
-        name: 'AI 视频/图片创作',
-        items: [
-          { name: '即梦 AI', desc: '一站式AI创作平台，激发无限创意', icon: '' },
-          { name: '可灵 AI', desc: '快手推出的新一代 AI 创意生产力平台', icon: '' },
-          { name: '索拉 (Sora)', desc: 'OpenAI 发布的文生视频模型，创造逼真场景', icon: '' },
-          { name: '稳定扩散 (SD)', desc: '强大的开源 AI 图片生成模型', icon: '' }
-        ]
-      },
-      {
-        name: '内容创作与设计',
-        items: [
-          { name: '豆包', desc: '字节跳动推出的智能助手，辅助内容创作', icon: '' },
-          { name: '图怪兽', desc: '在线海报编辑器，海量模板一键出图', icon: '' },
-          { name: '一键抠图', desc: '在线一键抠图换背景，专业的快速抠图工具', icon: '' },
-          { name: '创客贴', desc: '全能的在线设计平台，提供海量图片素材和模板', icon: '' }
-        ]
-      }
-    ]
+    categories: mediaData.map(cat => ({
+      name: cat.category,
+      items: cat.items.map(item => ({
+        name: item.title,
+        desc: item.desc,
+        icon: item.icon,
+        link: item.link
+      }))
+    }))
   },
   {
-    title: '跨境电商资源',
+    title: '跨境电商',
     link: '/ecommerce/',
-    categories: [
-      {
-        name: '浏览器插件',
-        items: [
-          { name: '大卖家', desc: '产品采集&活动管理，一键采集多平台产品', icon: '' },
-          { name: 'FetchV', desc: 'M3U8/HLS视频下载器，轻松下载网页视频', icon: '' },
-          { name: 'FigmaEX', desc: 'Figma 增强插件，提升设计效率', icon: '' },
-          { name: '沉浸式翻译', desc: '双语对照网页翻译插件，支持PDF翻译', icon: '' }
-        ]
-      },
-      {
-        name: '跨境指纹浏览器',
-        items: [
-          { name: '广告力量', desc: '专业的指纹浏览器，多账号安全管理', icon: '' },
-          { name: '紫鸟浏览器', desc: '专为跨境电商卖家打造的安全浏览器', icon: '' },
-          { name: 'Hubstudio', desc: '免费的指纹浏览器，多账号环境隔离', icon: '' },
-          { name: '飞跨浏览器', desc: '专为跨境电商打造的超级浏览器，安全高效', icon: '' }
-        ]
-      }
-    ]
+    categories: ecommerceData.map(cat => ({
+      name: cat.category,
+      items: cat.items.map(item => ({
+        name: item.title,
+        desc: item.desc,
+        icon: item.icon,
+        link: item.link
+      }))
+    }))
   }
 ]);
 </script>
@@ -250,27 +220,27 @@ const resourcesData = reactive([
   }
 }
 
-/* --- 卡片：极简真彩大平层 (无阴影、极浅边框) --- */
+/* --- 卡片：极简真彩大平层 (优化边框和阴影) --- */
 .pure-flat-card {
   display: flex;
   flex-direction: column;
   padding: 20px;
   background: var(--c-bg);
-  border: 1px solid var(--c-border-soft, #f1f3f5);
-  /* 极浅色边框 */
-  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  /* 更明显的边框 */
+  border-radius: 12px;
   text-decoration: none !important;
-  box-shadow: none !important;
-  /* 强制去阴影 */
-  transition: all 0.25s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  /* 添加轻微初始阴影 */
+  transition: all 0.3s ease;
 }
 
 .pure-flat-card:hover {
-  transform: translateY(-2px);
-  border-color: #e2e8f0;
-  /* 悬停时边框微深 */
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04) !important;
-  /* 极微弱高级感阴影 */
+  transform: translateY(-4px);
+  border-color: #3eaf7c;
+  /* 悬停时边框变绿 */
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(62, 175, 124, 0.1);
+  /* 双层阴影，带绿色光晕 */
 }
 
 /* 顶部：真彩图标释放 */
@@ -368,11 +338,13 @@ html.dark .full-width-section:nth-child(even) {
 
 html.dark .pure-flat-card {
   background: var(--c-bg-light);
-  border-color: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 html.dark .pure-flat-card:hover {
-  border-color: rgba(255, 255, 255, 0.12);
+  border-color: #3eaf7c;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4), 0 4px 8px rgba(62, 175, 124, 0.2);
 }
 
 html.dark .brand-name {
