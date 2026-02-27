@@ -30,6 +30,10 @@
           <p class="sub-title">Follow her as she goes on the hunt for creative ideas and turns all her wonderful ideas
             into reality.</p>
         </div>
+        <div class="action-buttons">
+          <a href="/tech/" class="btn primary-btn">🚀 开始探索</a>
+          <a href="/about/" class="btn secondary-btn">👨‍💻 关于我</a>
+        </div>
       </div>
     </div>
 
@@ -346,6 +350,61 @@ html.dark .triangle-3 {
   line-height: 1.6 !important;
 }
 
+/* ==========================================
+   新增：双轨 CTA 按钮组 (极致毛玻璃与光影交互)
+========================================== */
+.action-buttons {
+  margin-top: 2.5rem;
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  align-items: center;
+  /* 初始隐藏，等待 JS 发令枪触发入场动画 */
+  opacity: 0;
+  will-change: transform, opacity, filter;
+}
+
+.btn {
+  padding: 0.8rem 2.5rem;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-decoration: none !important;
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  pointer-events: auto;
+  /* 确保在视差层中可以被点击 */
+}
+
+/* 主按钮：品牌绿流光溢彩 */
+.primary-btn {
+  background: rgba(66, 245, 147, 0.85);
+  color: #0f172a !important;
+  box-shadow: 0 0 20px rgba(66, 245, 147, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.primary-btn:hover {
+  background: #42f593;
+  box-shadow: 0 0 40px rgba(66, 245, 147, 0.6), 0 0 80px rgba(66, 245, 147, 0.2);
+  transform: translateY(-4px) scale(1.02);
+}
+
+/* 次按钮：高级深空毛玻璃 */
+.secondary-btn {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.secondary-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
 /* 鼠标指示器 */
 .scroll-indicator {
   position: absolute;
@@ -425,6 +484,7 @@ html.dark .triangle-3 {
 .main-title .line1,
 .main-title .line2,
 .sub-title,
+.action-buttons,
 .scroll-indicator {
   opacity: 0;
   /* 默认不可见 */
@@ -453,6 +513,11 @@ html.dark .triangle-3 {
     animation: fade-up-focus 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.7s forwards;
   }
 
+  /* 5. CTA 按钮组接力浮现 (在副标题之后) */
+  .action-buttons {
+    animation: fade-up-focus 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.85s forwards;
+  }
+
   /* 4. 鼠标指示器最后出现 */
   .scroll-indicator {
     animation: fade-up-focus 1.4s cubic-bezier(0.22, 1, 0.36, 1) 1.6s forwards;
@@ -473,6 +538,19 @@ html.dark .triangle-3 {
   .hero-content {
     margin-top: -5vh;
     padding: 0 20px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .btn {
+    width: 100%;
+    max-width: 280px;
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
   }
 }
 </style>
