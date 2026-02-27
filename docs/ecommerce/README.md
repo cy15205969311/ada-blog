@@ -1,13 +1,6 @@
-# 跨境电商
+---
+sidebar: false
+pageClass: custom-nav-page
+---
 
-这里将分享跨境电商的实战经验和案例分析。
-
-## 内容方向
-
-- 亚马逊运营
-- TikTok Shop
-- Shopify 建站
-- 选品策略
-- 广告投放
-
-敬请期待...
+<EcommerceResources />
