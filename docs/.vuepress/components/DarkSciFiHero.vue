@@ -24,60 +24,25 @@
 <script setup>
 import { onMounted, onUnmounted, nextTick } from 'vue';
 
-let navEl = null;
-
 const handleScroll = () => {
-  if (!navEl) return;
-
+  const root = document.documentElement;
   if (window.scrollY > 50) {
-    // 滚下去时：清洗内联样式，交还给 CSS 毛玻璃控制
-    navEl.style.removeProperty('background');
-    navEl.style.removeProperty('background-color');
-    navEl.style.removeProperty('box-shadow');
-    navEl.style.removeProperty('border-bottom');
-    navEl.style.removeProperty('backdrop-filter');
-    navEl.style.removeProperty('-webkit-backdrop-filter');
-    navEl.classList.add('is-nav-frosted'); // 挂载毛玻璃类名
+    root.classList.remove('is-hero-top');
   } else {
-    // 在顶部时：使用 !important 内联样式暴力透明，无视任何优先级
-    navEl.style.setProperty('background', 'transparent', 'important');
-    navEl.style.setProperty('background-color', 'transparent', 'important');
-    navEl.style.setProperty('box-shadow', 'none', 'important');
-    navEl.style.setProperty('border-bottom', 'none', 'important');
-    navEl.style.setProperty('backdrop-filter', 'none', 'important');
-    navEl.style.setProperty('-webkit-backdrop-filter', 'none', 'important');
-    navEl.classList.remove('is-nav-frosted');
+    root.classList.add('is-hero-top');
   }
 };
 
 onMounted(() => {
   nextTick(() => {
-    // 广撒网：兼容 VuePress 2 各种版本的导航栏类名和标签
-    navEl = document.querySelector('header.vp-navbar') ||
-      document.querySelector('header.navbar') ||
-      document.querySelector('.navbar');
-
-    if (navEl) {
-      navEl.style.setProperty('transition', 'all 0.4s ease', 'important');
-      window.addEventListener('scroll', handleScroll, { passive: true });
-      handleScroll(); // 立刻执行一次，消灭白边
-    }
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // 初始化
   });
 });
 
 onUnmounted(() => {
-  if (navEl) {
-    window.removeEventListener('scroll', handleScroll);
-    // 离开首页时彻底打扫战场，恢复原样
-    navEl.style.removeProperty('background');
-    navEl.style.removeProperty('background-color');
-    navEl.style.removeProperty('box-shadow');
-    navEl.style.removeProperty('border-bottom');
-    navEl.style.removeProperty('backdrop-filter');
-    navEl.style.removeProperty('-webkit-backdrop-filter');
-    navEl.style.removeProperty('transition');
-    navEl.classList.remove('is-nav-frosted');
-  }
+  window.removeEventListener('scroll', handleScroll);
+  document.documentElement.classList.remove('is-hero-top'); // 离开页面时彻底清理
 });
 </script>
 
@@ -106,6 +71,14 @@ onUnmounted(() => {
   inset: 0;
   background: linear-gradient(170deg, #4b8093 0%, #6f9ca7 45%, #d1dbd4 100%);
   z-index: 1;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- 暗黑模式：深邃夜空 --- */
+html[data-theme='dark'] .hero-sky-bg,
+html.dark .hero-sky-bg {
+  /* 从白天的清新蓝灰，变成夜晚的深渊蓝紫 */
+  background: linear-gradient(170deg, #090e17 0%, #141b2d 45%, #1e293b 100%);
 }
 
 /* 标志性的黄色太阳 */
@@ -121,6 +94,15 @@ onUnmounted(() => {
   z-index: 2;
   /* 微微的发光感 */
   box-shadow: 0 0 60px rgba(209, 176, 40, 0.4);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- 暗黑模式：化日为月 --- */
+html[data-theme='dark'] .yellow-sun,
+html.dark .yellow-sun {
+  background-color: #e2e8f0;
+  /* 清冷的白月光 */
+  box-shadow: 0 0 60px rgba(226, 232, 240, 0.3), 0 0 120px rgba(226, 232, 240, 0.1);
 }
 
 /* 底部抽象几何山影 (用 CSS 伪造图2底部的模糊形状) */
@@ -133,6 +115,7 @@ onUnmounted(() => {
   z-index: 3;
   opacity: 0.15;
   pointer-events: none;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 
   .shape {
     position: absolute;
@@ -142,6 +125,7 @@ onUnmounted(() => {
     border-left: 100px solid transparent;
     border-right: 100px solid transparent;
     border-bottom: 150px solid #2c4a52;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .triangle-1 {
@@ -159,6 +143,28 @@ onUnmounted(() => {
     left: 75%;
     transform: scale(1.5);
   }
+}
+
+/* --- 暗黑模式：山影沉入夜色 --- */
+html[data-theme='dark'] .abstract-shapes,
+html.dark .abstract-shapes {
+  opacity: 0.3;
+  /* 夜晚剪影更浓点 */
+}
+
+html[data-theme='dark'] .abstract-shapes .triangle-1,
+html.dark .abstract-shapes .triangle-1 {
+  border-bottom-color: #020617;
+}
+
+html[data-theme='dark'] .abstract-shapes .triangle-2,
+html.dark .abstract-shapes .triangle-2 {
+  border-bottom-color: #0f172a;
+}
+
+html[data-theme='dark'] .abstract-shapes .triangle-3,
+html.dark .abstract-shapes .triangle-3 {
+  border-bottom-color: #020617;
 }
 
 /* 文本排版 */
