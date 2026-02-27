@@ -4,7 +4,7 @@ home: false
 <DarkSciFiHero/>
 <TechMarquee />
 
-## 快速上手
+<!-- ## 快速上手
 
 这是一个使用 VuePress 2 搭建的现代化博客。
 
@@ -26,6 +26,6 @@ pnpm docs:dev
 
 # 构建生产版本
 pnpm docs:build
-```
+``` -->
 
 <HomeResources />
