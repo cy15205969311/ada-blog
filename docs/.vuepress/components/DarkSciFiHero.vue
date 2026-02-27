@@ -1,5 +1,5 @@
 <template>
-  <div class="ada-hero-wrapper">
+  <div class="ada-hero-wrapper" :class="{ 'is-loaded': isLoaded }">
     <div class="hero-sky-bg"></div>
     <div class="yellow-sun"></div>
     <div class="abstract-shapes">
@@ -22,7 +22,9 @@
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, nextTick } from 'vue';
+import { onMounted, onUnmounted, nextTick, ref } from 'vue';
+
+const isLoaded = ref(false);
 
 const handleScroll = () => {
   const root = document.documentElement;
@@ -35,6 +37,11 @@ const handleScroll = () => {
 
 onMounted(() => {
   nextTick(() => {
+    // 发令枪：等待 50ms 后触发动画
+    setTimeout(() => {
+      isLoaded.value = true;
+    }, 50);
+
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll(); // 初始化
   });
@@ -47,7 +54,9 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
-/* 越狱容器，占满首屏 */
+/* ==========================================
+   越狱容器，占满首屏
+========================================== */
 .ada-hero-wrapper {
   position: relative;
   width: 100vw;
@@ -65,7 +74,9 @@ onUnmounted(() => {
   padding-top: 6rem !important;
 }
 
-/* 蓝灰过渡到暖白的柔和天空 */
+/* ==========================================
+   蓝灰过渡到暖白的柔和天空
+========================================== */
 .hero-sky-bg {
   position: absolute;
   inset: 0;
@@ -74,14 +85,15 @@ onUnmounted(() => {
   transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* --- 暗黑模式：深邃夜空 --- */
+/* 暗黑模式：深邃夜空 */
 html[data-theme='dark'] .hero-sky-bg,
 html.dark .hero-sky-bg {
-  /* 从白天的清新蓝灰，变成夜晚的深渊蓝紫 */
   background: linear-gradient(170deg, #090e17 0%, #141b2d 45%, #1e293b 100%);
 }
 
-/* 标志性的黄色太阳 */
+/* ==========================================
+   标志性的黄色太阳/月亮
+========================================== */
 .yellow-sun {
   position: absolute;
   top: 15%;
@@ -89,23 +101,30 @@ html.dark .hero-sky-bg {
   width: 160px;
   height: 160px;
   background-color: #d1b028;
-  /* 姜黄色 */
   border-radius: 50%;
   z-index: 2;
-  /* 微微的发光感 */
   box-shadow: 0 0 60px rgba(209, 176, 40, 0.4);
+  /* 默认隐藏状态 */
+  opacity: 0;
+  transform: translateY(50px) scale(0.8);
   transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* --- 暗黑模式：化日为月 --- */
+/* 暗黑模式：化日为月 */
 html[data-theme='dark'] .yellow-sun,
 html.dark .yellow-sun {
   background-color: #e2e8f0;
-  /* 清冷的白月光 */
   box-shadow: 0 0 60px rgba(226, 232, 240, 0.3), 0 0 120px rgba(226, 232, 240, 0.1);
 }
 
-/* 底部抽象几何山影 (用 CSS 伪造图2底部的模糊形状) */
+/* 激活状态：太阳升起动画 */
+.ada-hero-wrapper.is-loaded .yellow-sun {
+  animation: sun-rise 2s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+/* ==========================================
+   底部抽象几何山影
+========================================== */
 .abstract-shapes {
   position: absolute;
   bottom: 0;
@@ -145,11 +164,10 @@ html.dark .yellow-sun {
   }
 }
 
-/* --- 暗黑模式：山影沉入夜色 --- */
+/* 暗黑模式：山影沉入夜色 */
 html[data-theme='dark'] .abstract-shapes,
 html.dark .abstract-shapes {
   opacity: 0.3;
-  /* 夜晚剪影更浓点 */
 }
 
 html[data-theme='dark'] .abstract-shapes .triangle-1,
@@ -167,14 +185,15 @@ html.dark .abstract-shapes .triangle-3 {
   border-bottom-color: #020617;
 }
 
-/* 文本排版 */
+/* ==========================================
+   文本排版
+========================================== */
 .hero-content {
   position: relative;
   z-index: 10;
   text-align: center;
   color: #ffffff;
   margin-top: -5vh;
-  /* 微微偏上，避开视觉中心 */
 }
 
 .main-title {
@@ -184,19 +203,47 @@ html.dark .abstract-shapes .triangle-3 {
   margin: 0 0 1.5rem 0 !important;
   letter-spacing: 2px !important;
   border: none !important;
-  /* 清除默认 H1 底边框 */
-  /* 极其重要：弥散阴影让文字在浅色背景上跳脱出来 */
   text-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 
   .line1 {
     margin-bottom: 5px;
+    /* 默认隐藏状态 */
+    opacity: 0;
+    transform: translateY(30px) scale(0.98);
+    filter: blur(12px);
+  }
+
+  .line2 {
+    /* 默认隐藏状态 */
+    opacity: 0;
+    transform: translateY(30px) scale(0.98);
+    filter: blur(12px);
   }
 
   .highlight {
-    /* 标志性的亮绿色 */
     color: #42f593;
     text-shadow: 0 0 40px rgba(66, 245, 147, 0.5), 0 5px 20px rgba(0, 0, 0, 0.3);
+    display: inline-block;
+    /* 默认隐藏状态 */
+    opacity: 0;
+    transform: translateY(30px) scale(0.98);
+    filter: blur(12px);
   }
+}
+
+/* 激活状态：第一行文字浮现 */
+.ada-hero-wrapper.is-loaded .main-title .line1 {
+  animation: ethereal-fade-up 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+}
+
+/* 激活状态：第二行文字浮现 */
+.ada-hero-wrapper.is-loaded .main-title .line2 {
+  animation: ethereal-fade-up 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.5s forwards;
+}
+
+/* 激活状态：高亮词语浮现 */
+.ada-hero-wrapper.is-loaded .main-title .highlight {
+  animation: ethereal-fade-up 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.7s forwards;
 }
 
 .sub-title {
@@ -206,35 +253,82 @@ html.dark .abstract-shapes .triangle-3 {
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
   max-width: 600px;
   margin: 0 auto !important;
+  /* 默认隐藏状态 */
+  opacity: 0;
+  transform: translateY(30px) scale(0.98);
+  filter: blur(12px);
 }
 
-/* 底部滚动鼠标指示器 */
+/* 激活状态：副标题浮现 */
+.ada-hero-wrapper.is-loaded .sub-title {
+  animation: ethereal-fade-up 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.9s forwards;
+}
+
+/* ==========================================
+   底部滚动鼠标指示器
+========================================== */
 .scroll-indicator {
   position: absolute;
   bottom: 6%;
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
+  /* 默认隐藏状态 */
+  opacity: 0;
+}
 
-  .mouse-icon {
-    width: 26px;
-    height: 42px;
-    border: 2px solid rgba(255, 255, 255, 0.8);
-    border-radius: 20px;
-    position: relative;
+/* 激活状态：滚动指示器浮现 */
+.ada-hero-wrapper.is-loaded .scroll-indicator {
+  animation: ethereal-fade-up 1.5s cubic-bezier(0.22, 1, 0.36, 1) 1.5s forwards;
+}
 
-    &::before {
-      content: '';
-      position: absolute;
-      top: 6px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 4px;
-      height: 8px;
-      background: #ffffff;
-      border-radius: 2px;
-      animation: mouse-scroll 1.5s cubic-bezier(0.15, 0.41, 0.69, 0.94) infinite;
-    }
+.mouse-icon {
+  width: 26px;
+  height: 42px;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 8px;
+    background: #ffffff;
+    border-radius: 2px;
+    animation: mouse-scroll 1.5s cubic-bezier(0.15, 0.41, 0.69, 0.94) infinite;
+  }
+}
+
+/* ==========================================
+   动画关键帧定义
+========================================== */
+@keyframes ethereal-fade-up {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.98);
+    filter: blur(12px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes sun-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(50px) scale(0.8);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 
@@ -250,7 +344,9 @@ html.dark .abstract-shapes .triangle-3 {
   }
 }
 
-/* 移动端适配 */
+/* ==========================================
+   移动端适配
+========================================== */
 @media (max-width: 768px) {
   .main-title {
     font-size: 2.8rem !important;
