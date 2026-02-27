@@ -142,8 +142,8 @@ const resourcesData = reactive([
 ========================================== */
 .full-width-section {
   width: 100%;
-  padding: 4.5rem 0;
-  /* 更大的上下呼吸感 */
+  padding: 2.5rem 0;
+  /* 适中的上下间距 */
 }
 
 /* 偶数项铺设浅灰背景，实现物理分层 */
@@ -164,8 +164,8 @@ const resourcesData = reactive([
   justify-content: space-between;
   align-items: flex-end;
   border-bottom: 1px solid var(--c-border-soft, #f1f3f5);
-  padding-bottom: 12px;
-  margin-bottom: 3.5rem;
+  padding-bottom: 10px;
+  margin-bottom: 2rem;
 }
 
 .title-wrap {
@@ -179,6 +179,7 @@ const resourcesData = reactive([
   color: var(--c-text);
   padding-bottom: 14px;
   border: none;
+  // background-color: skyblue;
 }
 
 /* 绿线装饰 */
@@ -189,7 +190,7 @@ const resourcesData = reactive([
   left: 0;
   width: 44px;
   height: 4px;
-  background: #3eaf7c;
+  // background: #3eaf7c;
   border-radius: 2px;
 }
 
@@ -202,36 +203,38 @@ const resourcesData = reactive([
 
 /* --- 子分类 --- */
 .sub-category {
-  margin-bottom: 3.5rem;
+  margin-bottom: 2rem;
 }
 
 .sub-title {
-  font-size: 1.15rem;
+  font-size: 0.95rem;
   font-weight: 700;
   color: var(--c-text);
-  margin: 0 0 1.5rem 0;
-  /* 更大的标题与网格间距 */
+  margin: 0 0 1rem 0;
+  /* 标题与网格间距 */
   border: none;
   display: flex;
   align-items: center;
+  line-height: 1.3;
+  padding: 0.4rem 0;
 }
 
 /* 精准对齐的绿点 */
 .sub-title::before {
   content: '';
   display: inline-block;
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
   background-color: #3eaf7c;
   border-radius: 50%;
-  margin-right: 10px;
+  margin-right: 8px;
 }
 
 /* --- 网格系统 --- */
 .flat-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  gap: 16px;
   /* 卡片之间的间距 */
 }
 
