@@ -36,3 +36,278 @@ footer.vp-page-meta {
   flex-direction: column;
   align-items: center;
 }
+
+
+/* ========================================
+   现代深邃暗黑模式 UI 升级
+   参考 Vercel / Linear 设计语言
+======================================== */
+
+/* --- 1. 全局深邃背景渐变 --- */
+:root {
+  --gradient-bg-start: #0a0e27;
+  --gradient-bg-mid: #1a1f3a;
+  --gradient-bg-end: #0f1419;
+  --cyan-glow: #00f0ff;
+  --purple-glow: #a78bfa;
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-bg: rgba(255, 255, 255, 0.05);
+}
+
+/* 首页整体背景 - 深邃渐变 */
+.home {
+  background: radial-gradient(ellipse at top,
+      var(--gradient-bg-mid) 0%,
+      var(--gradient-bg-start) 50%,
+      var(--gradient-bg-end) 100%);
+  min-height: 100vh;
+}
+
+/* --- 2. Hero 区域增强 --- */
+.home .hero {
+  padding: 6rem 2rem 4rem !important;
+  background: transparent !important;
+  position: relative;
+  overflow: hidden;
+
+  /* 添加科技感网格纹理 */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+      linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  /* 添加光晕效果 */
+  &::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle,
+        rgba(0, 240, 255, 0.15) 0%,
+        rgba(167, 139, 250, 0.1) 30%,
+        transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+/* Hero 标题增强 - 巨大渐变文字 */
+.home .hero h1 {
+  font-size: clamp(3rem, 8vw, 5.5rem) !important;
+  font-weight: 800 !important;
+  line-height: 1.1 !important;
+  margin-bottom: 1.5rem !important;
+  background: linear-gradient(135deg,
+      #00f0ff 0%,
+      #a78bfa 50%,
+      #00f0ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  z-index: 1;
+}
+
+/* Hero 副标题 */
+.home .hero .description {
+  font-size: 1.4rem !important;
+  color: rgba(255, 255, 255, 0.7) !important;
+  max-width: 600px !important;
+  margin: 0 auto 3rem !important;
+  position: relative;
+  z-index: 1;
+}
+
+/* --- 3. 按钮现代化 --- */
+.home .hero .actions {
+  position: relative;
+  z-index: 1;
+}
+
+/* 主按钮 - 发光效果 */
+.home .hero .action-button.primary {
+  background: linear-gradient(135deg, #00f0ff 0%, #00d4e6 100%) !important;
+  color: #0a0e27 !important;
+  font-weight: 600 !important;
+  padding: 0.9rem 2.5rem !important;
+  border-radius: 8px !important;
+  border: none !important;
+  box-shadow: 0 0 30px rgba(0, 240, 255, 0.4),
+    0 4px 12px rgba(0, 0, 0, 0.3) !important;
+  transition: all 0.3s ease !important;
+
+  &:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 0 40px rgba(0, 240, 255, 0.6),
+      0 8px 20px rgba(0, 0, 0, 0.4) !important;
+  }
+}
+
+/* 次要按钮 - 毛玻璃效果 */
+.home .hero .action-button:not(.primary) {
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  padding: 0.9rem 2.5rem !important;
+  border-radius: 8px !important;
+  transition: all 0.3s ease !important;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-color: rgba(0, 240, 255, 0.3) !important;
+    transform: translateY(-2px) !important;
+  }
+}
+
+/* --- 4. Features 卡片 - 毛玻璃拟态 --- */
+.home .features {
+  padding: 4rem 2rem !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+}
+
+.home .feature {
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 12px !important;
+  padding: 2rem !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+
+  /* 悬停交互 */
+  &:hover {
+    transform: translateY(-8px) !important;
+    border-color: rgba(0, 240, 255, 0.3) !important;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4),
+      0 0 20px rgba(0, 240, 255, 0.2) !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+  }
+
+  h2 {
+    color: rgba(255, 255, 255, 0.95) !important;
+    font-weight: 600 !important;
+    font-size: 1.3rem !important;
+    margin-bottom: 0.8rem !important;
+  }
+
+  p {
+    color: rgba(255, 255, 255, 0.7) !important;
+    line-height: 1.6 !important;
+  }
+}
+
+/* --- 5. 导航栏透明化 --- */
+.navbar {
+  background: transparent !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+  transition: all 0.3s ease !important;
+
+  /* 滚动后添加背景 */
+  &.scrolled {
+    background: rgba(10, 14, 39, 0.8) !important;
+    border-bottom-color: rgba(255, 255, 255, 0.1) !important;
+  }
+}
+
+/* 导航链接颜色 */
+.navbar .nav-links a {
+  color: rgba(255, 255, 255, 0.8) !important;
+
+  &:hover,
+  &.router-link-active {
+    color: var(--cyan-glow) !important;
+  }
+}
+
+/* --- 6. 内容区域优化 --- */
+.theme-default-content {
+  background: transparent !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+
+  h2,
+  h3,
+  h4 {
+    color: rgba(255, 255, 255, 0.95) !important;
+    border-bottom-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  code {
+    background: rgba(0, 240, 255, 0.1) !important;
+    color: var(--cyan-glow) !important;
+    border-radius: 4px !important;
+  }
+
+  pre {
+    background: rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 8px !important;
+  }
+}
+
+/* --- 7. 页脚优化 --- */
+.page-meta,
+footer {
+  background: transparent !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* --- 8. 响应式优化 --- */
+@media (max-width: 768px) {
+  .home .hero h1 {
+    font-size: clamp(2rem, 10vw, 3rem) !important;
+  }
+
+  .home .hero .description {
+    font-size: 1.1rem !important;
+  }
+
+  .home .hero .actions {
+    flex-direction: column !important;
+    gap: 1rem !important;
+
+    .action-button {
+      width: 100% !important;
+      max-width: 300px !important;
+    }
+  }
+}
+
+
+/* --- 专用的高级毛玻璃类，由 JS 挂载 --- */
+.is-nav-frosted {
+  --c-bg-navbar: rgba(255, 255, 255, 0.8) !important;
+  background-color: var(--c-bg-navbar) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03) !important;
+}
+
+/* 暗黑模式适配 */
+html[data-theme='dark'] .is-nav-frosted,
+html.dark .is-nav-frosted {
+  --c-bg-navbar: rgba(18, 18, 20, 0.8) !important;
+  background-color: var(--c-bg-navbar) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+}

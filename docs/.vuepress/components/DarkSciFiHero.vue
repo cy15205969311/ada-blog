@@ -22,7 +22,63 @@
 </template>
 
 <script setup>
-// 纯静态视觉展示，无需复杂 JS
+import { onMounted, onUnmounted, nextTick } from 'vue';
+
+let navEl = null;
+
+const handleScroll = () => {
+  if (!navEl) return;
+
+  if (window.scrollY > 50) {
+    // 滚下去时：清洗内联样式，交还给 CSS 毛玻璃控制
+    navEl.style.removeProperty('background');
+    navEl.style.removeProperty('background-color');
+    navEl.style.removeProperty('box-shadow');
+    navEl.style.removeProperty('border-bottom');
+    navEl.style.removeProperty('backdrop-filter');
+    navEl.style.removeProperty('-webkit-backdrop-filter');
+    navEl.classList.add('is-nav-frosted'); // 挂载毛玻璃类名
+  } else {
+    // 在顶部时：使用 !important 内联样式暴力透明，无视任何优先级
+    navEl.style.setProperty('background', 'transparent', 'important');
+    navEl.style.setProperty('background-color', 'transparent', 'important');
+    navEl.style.setProperty('box-shadow', 'none', 'important');
+    navEl.style.setProperty('border-bottom', 'none', 'important');
+    navEl.style.setProperty('backdrop-filter', 'none', 'important');
+    navEl.style.setProperty('-webkit-backdrop-filter', 'none', 'important');
+    navEl.classList.remove('is-nav-frosted');
+  }
+};
+
+onMounted(() => {
+  nextTick(() => {
+    // 广撒网：兼容 VuePress 2 各种版本的导航栏类名和标签
+    navEl = document.querySelector('header.vp-navbar') ||
+      document.querySelector('header.navbar') ||
+      document.querySelector('.navbar');
+
+    if (navEl) {
+      navEl.style.setProperty('transition', 'all 0.4s ease', 'important');
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      handleScroll(); // 立刻执行一次，消灭白边
+    }
+  });
+});
+
+onUnmounted(() => {
+  if (navEl) {
+    window.removeEventListener('scroll', handleScroll);
+    // 离开首页时彻底打扫战场，恢复原样
+    navEl.style.removeProperty('background');
+    navEl.style.removeProperty('background-color');
+    navEl.style.removeProperty('box-shadow');
+    navEl.style.removeProperty('border-bottom');
+    navEl.style.removeProperty('backdrop-filter');
+    navEl.style.removeProperty('-webkit-backdrop-filter');
+    navEl.style.removeProperty('transition');
+    navEl.classList.remove('is-nav-frosted');
+  }
+});
 </script>
 
 <style lang="scss" scoped>
@@ -38,8 +94,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  /* 抵消 VuePress 默认导航栏的高度影响，让画面顶到浏览器最上方 */
-  margin-top: -4rem;
+  /* 终极杀招：极其夸张的负边距，绝对确保背景顶到浏览器最上沿 */
+  margin-top: -6rem !important;
+  /* 把内部内容推回正常位置，防止文字被导航栏遮挡 */
+  padding-top: 6rem !important;
 }
 
 /* 蓝灰过渡到暖白的柔和天空 */
