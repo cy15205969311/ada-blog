@@ -6,7 +6,7 @@
           <div class="title-wrap">
             <h2 class="main-title">{{ section.title }}</h2>
           </div>
-          <a :href="section.link" class="link-view-more">查看更多 &rarr;</a>
+          <span @click="openLink(section.link)" class="link-view-more">查看更多 &rarr;</span>
         </div>
 
         <div v-for="(category, cIndex) in section.categories.slice(0, 2)" :key="cIndex" class="sub-category">
@@ -27,7 +27,7 @@
         </div>
 
         <div class="section-footer">
-          <a :href="section.link" class="solid-cta-btn">查看更多{{ section.title }} &rarr;</a>
+          <span @click="openLink(section.link)" class="solid-cta-btn">查看更多{{ section.title }} &rarr;</span>
         </div>
       </div>
     </section>
@@ -176,6 +176,11 @@ const openLink = (url) => {
   color: #3eaf7c;
   font-weight: 500;
   text-decoration: none;
+  cursor: pointer;
+}
+
+.link-view-more:hover {
+  opacity: 0.8;
 }
 
 /* --- 子分类 --- */
@@ -331,6 +336,7 @@ const openLink = (url) => {
   border-radius: 6px;
   text-decoration: none !important;
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .solid-cta-btn:hover {
