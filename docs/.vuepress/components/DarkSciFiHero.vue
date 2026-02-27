@@ -1,344 +1,478 @@
 <template>
   <div class="ada-hero-wrapper" :class="{ 'is-loaded': isLoaded }">
-    <div class="hero-sky-bg"></div>
-    <div class="yellow-sun"></div>
-    <div class="abstract-shapes">
-      <div class="shape triangle-1"></div>
-      <div class="shape triangle-2"></div>
-      <div class="shape triangle-3"></div>
+    <div class="parallax-layer sky-layer" :style="parallaxStyle.sky">
+      <div class="hero-sky-bg"></div>
     </div>
-    <div class="hero-content">
-      <h1 class="main-title">
-        <div class="line1">Ada's on a journey to find </div>
-        <div class="line2"><span class="highlight">The Tech World</span> </div>
-      </h1>
-      <p class="sub-title">Follow her as she goes on the hunt for creative ideas and turns all her wonderful ideas into
-        reality.</p>
+
+    <div class="parallax-layer sun-layer" :style="parallaxStyle.sun">
+      <div class="yellow-sun"></div>
     </div>
-    <div class="scroll-indicator">
-      <div class="mouse-icon"></div>
+
+    <div class="parallax-layer mountain-layer" :style="parallaxStyle.mountain">
+      <div class="abstract-shapes">
+        <div class="shape triangle-1"></div>
+        <div class="shape triangle-2"></div>
+        <div class="shape triangle-3"></div>
+      </div>
+    </div>
+
+    <div class="parallax-layer content-layer" :style="parallaxStyle.content">
+      <div class="hero-content">
+        <h1 class="main-title">
+          <div class="line-wrapper">
+            <div class="line1">Ada's on a journey to find </div>
+          </div>
+          <div class="line-wrapper">
+            <div class="line2"><span class="highlight">The Tech World</span> </div>
+          </div>
+        </h1>
+        <div class="sub-wrapper">
+          <p class="sub-title">Follow her as she goes on the hunt for creative ideas and turns all her wonderful ideas
+            into reality.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="parallax-layer mouse-layer" :style="parallaxStyle.mouse">
+      <div class="scroll-indicator">
+        <div class="mouse-icon"></div>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, nextTick, ref } from 'vue';
+import { ref, reactive, onMounted, onUnmounted, nextTick } from 'vue';
 
-const isLoaded = ref(false);
+// --- 状态定义 ---
+const isLoaded = ref(false); // 控制入场动画的发令枪
+let ticking = false; // 用于 rAF 节流
 
+// 定义各图层的视差样式对象 (使用 reactive 获得更好的性能)
+const parallaxStyle = reactive({
+  sky: { transform: 'translate3d(0,0,0)' },
+  sun: { transform: 'translate3d(0,0,0)' },
+  mountain: { transform: 'translate3d(0,0,0)' },
+  content: { transform: 'translate3d(0,0,0)', opacity: 1 },
+  mouse: { opacity: 1 }
+});
+
+// --- 核心逻辑：高性能滚动监听 ---
 const handleScroll = () => {
-  const root = document.documentElement;
-  if (window.scrollY > 50) {
-    root.classList.remove('is-hero-top');
-  } else {
-    root.classList.add('is-hero-top');
+  if (!ticking) {
+    window.requestAnimationFrame(() => {
+      const scrollY = window.scrollY;
+
+      // 如果滚出首屏太远，停止计算以节省性能
+      if (scrollY > 1200) {
+        ticking = false;
+        return;
+      }
+
+      // --- 计算视差参数 (核心数学公式) ---
+      // 天空：极慢向下 (系数 0.15)
+      parallaxStyle.sky.transform = `translate3d(0, ${scrollY * 0.15}px, 0)`;
+
+      // 太阳：较快向下坠落 (系数 0.5)
+      parallaxStyle.sun.transform = `translate3d(0, ${scrollY * 0.5}px, 0)`;
+
+      // 山脉：轻微向上反向移动 (系数 -0.1)
+      parallaxStyle.mountain.transform = `translate3d(0, ${-scrollY * 0.1}px, 0)`;
+
+      // 内容：中速跟随 (系数 0.3) + 快速透明消失 (滚到 300px 时完全消失)
+      const contentOpacity = Math.max(1 - scrollY / 300, 0);
+      parallaxStyle.content.transform = `translate3d(0, ${scrollY * 0.3}px, 0)`;
+      parallaxStyle.content.opacity = contentOpacity;
+
+      // 鼠标：一滚动立刻消失 (滚到 100px 时完全消失)
+      parallaxStyle.mouse.opacity = Math.max(1 - scrollY / 100, 0);
+
+      ticking = false;
+    });
+    ticking = true;
   }
 };
 
+// --- 生命周期钩子 ---
 onMounted(() => {
-  nextTick(() => {
-    // 发令枪：等待 50ms 后触发动画
-    setTimeout(() => {
-      isLoaded.value = true;
-    }, 50);
+  // 1. 启动 JS 发令枪，解决水合问题，触发 CSS 入场动画
+  // 延迟 100ms 确保浏览器完成首次绘制
+  setTimeout(() => {
+    isLoaded.value = true;
+  }, 100);
 
+  // 2. 添加滚动监听
+  nextTick(() => {
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); // 初始化
   });
 });
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll);
-  document.documentElement.classList.remove('is-hero-top'); // 离开页面时彻底清理
 });
 </script>
 
 <style lang="scss" scoped>
-/* 越狱容器，占满首屏 */
+/* ==========================================
+   1. 核心架构：绝对满屏叠层布局
+========================================== */
 .ada-hero-wrapper {
   position: relative;
   width: 100vw;
   height: 100vh;
   min-height: 700px;
   left: 50%;
-  transform: translateX(-50%);
+  /* 抵消掉父级的可能的 padding/margin */
+  margin-left: -50vw;
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* 终极杀招：极其夸张的负边距，绝对确保背景顶到浏览器最上沿 */
-  margin-top: -6rem !important;
-  /* 把内部内容推回正常位置，防止文字被导航栏遮挡 */
-  padding-top: 6rem !important;
+  /* 抵消导航栏高度，向上穿透 */
+  margin-top: -6rem;
+  padding-top: 6rem;
+  /* 兜底背景色，防止加载闪白 */
+  background: #4b8093;
 }
 
-/* 蓝灰过渡到暖白的柔和天空 */
+/* 所有视差图层的通用样式：强制铺满全屏，开启硬件加速 */
+.parallax-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  /* 默认鼠标穿透，防止挡住交互 */
+  will-change: transform, opacity;
+  /* GPU 加速提示 */
+}
+
+/* 严格的 Z-Index 层级管理 */
+.sky-layer {
+  z-index: 1;
+}
+
+.sun-layer {
+  z-index: 2;
+}
+
+.mountain-layer {
+  z-index: 3;
+}
+
+/* 内容层需要恢复鼠标交互 */
+.content-layer {
+  z-index: 10;
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.mouse-layer {
+  z-index: 20;
+}
+
+/* ==========================================
+   2. 静态样式定义 (昼夜适配)
+========================================== */
+/* 天空背景 - 白天 */
 .hero-sky-bg {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background: linear-gradient(170deg, #4b8093 0%, #6f9ca7 45%, #d1dbd4 100%);
-  z-index: 1;
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background 1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* --- 暗黑模式：深邃夜空 --- */
+/* 天空背景 - 黑夜 */
 html[data-theme='dark'] .hero-sky-bg,
 html.dark .hero-sky-bg {
-  /* 从白天的清新蓝灰，变成夜晚的深渊蓝紫 */
   background: linear-gradient(170deg, #090e17 0%, #141b2d 45%, #1e293b 100%);
 }
 
-/* 标志性的黄色太阳 */
+/* 太阳/月亮 - 白天 */
 .yellow-sun {
   position: absolute;
   top: 15%;
   right: 15%;
-  width: 160px;
-  height: 160px;
+  width: 14vw;
+  height: 14vw;
+  min-width: 120px;
+  min-height: 120px;
+  max-width: 200px;
+  max-height: 200px;
   background-color: #d1b028;
-  /* 姜黄色 */
   border-radius: 50%;
-  z-index: 2;
-  /* 微微的发光感 */
-  box-shadow: 0 0 60px rgba(209, 176, 40, 0.4);
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 60px rgba(209, 176, 40, 0.6);
+  transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* --- 暗黑模式：化日为月 --- */
+/* 太阳/月亮 - 黑夜 (化为清冷月亮) */
 html[data-theme='dark'] .yellow-sun,
 html.dark .yellow-sun {
   background-color: #e2e8f0;
-  /* 清冷的白月光 */
   box-shadow: 0 0 60px rgba(226, 232, 240, 0.3), 0 0 120px rgba(226, 232, 240, 0.1);
 }
 
-/* 底部抽象几何山影 (用 CSS 伪造图2底部的模糊形状) */
+/* ==========================================
+   终极修正：还原几何山峰 + 注入防脱离根系 (Bleed)
+========================================== */
+/* 抽象山脉前景容器 */
 .abstract-shapes {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 20%;
-  z-index: 3;
+  height: 25%;
   opacity: 0.15;
-  pointer-events: none;
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-
-  .shape {
-    position: absolute;
-    bottom: -10px;
-    width: 0;
-    height: 0;
-    border-left: 100px solid transparent;
-    border-right: 100px solid transparent;
-    border-bottom: 150px solid #2c4a52;
-    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .triangle-1 {
-    left: 10%;
-    transform: scale(1.2);
-  }
-
-  .triangle-2 {
-    left: 40%;
-    transform: scale(0.8);
-    border-bottom-color: #4b8093;
-  }
-
-  .triangle-3 {
-    left: 75%;
-    transform: scale(1.5);
-  }
+  transition: all 1s ease;
 }
 
-/* --- 暗黑模式：山影沉入夜色 --- */
 html[data-theme='dark'] .abstract-shapes,
 html.dark .abstract-shapes {
   opacity: 0.3;
-  /* 夜晚剪影更浓点 */
 }
 
-html[data-theme='dark'] .abstract-shapes .triangle-1,
-html.dark .abstract-shapes .triangle-1 {
-  border-bottom-color: #020617;
+/* 核心重构：利用 currentColor 实现颜色穿透，不再写死 border-color */
+.shape {
+  position: absolute;
+  bottom: -10px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-left: 120px solid transparent;
+  border-right: 120px solid transparent;
+  border-bottom: 180px solid currentColor;
+  /* 动态读取当前类名的 color */
 }
 
-html[data-theme='dark'] .abstract-shapes .triangle-2,
-html.dark .abstract-shapes .triangle-2 {
-  border-bottom-color: #0f172a;
+/* 魔法防御：为山峰向下延伸出 400px 的巨型实体根系，视差怎么拔都不会漏底！ */
+.shape::after {
+  content: '';
+  position: absolute;
+  top: 180px;
+  /* 刚好接在三角形的底边 */
+  left: -120px;
+  /* 覆盖整个三角形的宽度 */
+  width: 240px;
+  height: 400px;
+  /* 巨大的安全余量 */
+  background-color: currentColor;
+  /* 完美继承山峰的颜色 */
 }
 
-html[data-theme='dark'] .abstract-shapes .triangle-3,
-html.dark .abstract-shapes .triangle-3 {
-  border-bottom-color: #020617;
+/* 赋予各种山峰独立的颜色与缩放 */
+.triangle-1 {
+  left: 5%;
+  transform: scale(1.4);
+  color: #2c4a52;
 }
 
-/* 文本排版 */
+.triangle-2 {
+  left: 40%;
+  transform: scale(1);
+  color: #4b8093;
+}
+
+.triangle-3 {
+  left: 75%;
+  transform: scale(1.8);
+  color: #2c4a52;
+}
+
+/* 山脉黑夜适配 (同步改变 color，根系会自动变色) */
+html[data-theme='dark'] .triangle-1,
+html.dark .triangle-1 {
+  color: #020617;
+}
+
+html[data-theme='dark'] .triangle-2,
+html.dark .triangle-2 {
+  color: #0f172a;
+}
+
+html[data-theme='dark'] .triangle-3,
+html.dark .triangle-3 {
+  color: #020617;
+}
+
+/* 内容排版 - 强制物理隔离文字行 */
 .hero-content {
-  position: relative;
-  z-index: 10;
   text-align: center;
   color: #ffffff;
-  margin-top: -5vh;
-  /* 微微偏上，避开视觉中心 */
+  margin-top: -10vh;
+  /* 视觉居中补偿 */
+  padding: 0 20px;
 }
 
 .main-title {
-  font-size: 4rem !important;
+  /* 稍微收紧一点极限大小，防止炸窗 */
+  font-size: clamp(2.5rem, 5vw, 4rem) !important;
   font-weight: 900 !important;
   line-height: 1.2 !important;
   margin: 0 0 1.5rem 0 !important;
   letter-spacing: 2px !important;
-  border: none !important;
-  /* 清除默认 H1 底边框 */
-  /* 极其重要：弥散阴影让文字在浅色背景上跳脱出来 */
-  text-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
 
-  .line1 {
-    margin-bottom: 5px;
-  }
+/* 核心修复：利用 line-wrapper 的 margin 强行隔开两行字！ */
+.line-wrapper {
+  overflow: hidden;
+  padding: 4px 0;
+}
 
-  .highlight {
-    /* 标志性的亮绿色 */
-    color: #42f593;
-    text-shadow: 0 0 40px rgba(66, 245, 147, 0.5), 0 5px 20px rgba(0, 0, 0, 0.3);
-  }
+.main-title .line-wrapper:first-child {
+  margin-bottom: 12px;
+  /* 强制拉开第一行和第二行的物理距离！绝对不会再撞车 */
+}
+
+.highlight {
+  color: #42f593;
+  text-shadow: 0 0 30px rgba(66, 245, 147, 0.4);
+}
+
+.sub-wrapper {
+  overflow: hidden;
+  padding-top: 15px;
 }
 
 .sub-title {
-  font-size: 1.15rem !important;
+  font-size: clamp(1.05rem, 1.8vw, 1.3rem) !important;
   font-weight: 400 !important;
   color: rgba(255, 255, 255, 0.9) !important;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
-  max-width: 600px;
+  max-width: 650px;
   margin: 0 auto !important;
+  line-height: 1.6 !important;
 }
 
-/* 底部滚动鼠标指示器 */
+/* 鼠标指示器 */
 .scroll-indicator {
   position: absolute;
-  bottom: 6%;
+  bottom: 8%;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 10;
+}
 
-  .mouse-icon {
-    width: 26px;
-    height: 42px;
-    border: 2px solid rgba(255, 255, 255, 0.8);
-    border-radius: 20px;
-    position: relative;
+.mouse-icon {
+  width: 26px;
+  height: 42px;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  border-radius: 20px;
+  position: relative;
+}
 
-    &::before {
-      content: '';
-      position: absolute;
-      top: 6px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 4px;
-      height: 8px;
-      background: #ffffff;
-      border-radius: 2px;
-      animation: mouse-scroll 1.5s cubic-bezier(0.15, 0.41, 0.69, 0.94) infinite;
-    }
+.mouse-icon::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  margin-left: -2px;
+  width: 4px;
+  height: 8px;
+  background: #ffffff;
+  border-radius: 2px;
+  animation: mouse-scroll 1.5s cubic-bezier(0.15, 0.41, 0.69, 0.94) infinite;
+}
+
+/* ==========================================
+   3. 终极动效：电影级入场动画 (CSS Keyframes)
+========================================== */
+/* 关键帧：通用的向上浮现与模糊对焦 */
+@keyframes fade-up-focus {
+  0% {
+    opacity: 0;
+    transform: translateY(50px) scale(0.95);
+    filter: blur(10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
   }
 }
 
+/* 关键帧：太阳升起 */
+@keyframes sun-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(100px) scale(0.8);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* 鼠标滚动提示动画 */
 @keyframes mouse-scroll {
   0% {
-    transform: translate(-50%, 0);
+    transform: translateY(0);
     opacity: 1;
   }
 
   100% {
-    transform: translate(-50%, 15px);
+    transform: translateY(15px);
     opacity: 0;
   }
 }
 
-/* 移动端适配 */
+/* --- 核心：初始隐藏状态 --- */
+/* 只有当 JS 添加了 is-loaded 类后，动画才会被触发，彻底解决水合问题 */
+.yellow-sun,
+.main-title .line1,
+.main-title .line2,
+.sub-title,
+.scroll-indicator {
+  opacity: 0;
+  /* 默认不可见 */
+  will-change: transform, opacity, filter;
+}
+
+/* --- 核心：触发入场动画 (带瀑布流延迟) --- */
+.ada-hero-wrapper.is-loaded {
+
+  /* 1. 太阳最先升起 (持续 2.4s) */
+  .yellow-sun {
+    animation: sun-rise 2.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  /* 2. 文字行依次浮现 (间隔 0.15s) */
+  .main-title .line1 {
+    animation: fade-up-focus 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+  }
+
+  .main-title .line2 {
+    animation: fade-up-focus 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.45s forwards;
+  }
+
+  /* 3. 副标题浮现 */
+  .sub-title {
+    animation: fade-up-focus 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.7s forwards;
+  }
+
+  /* 4. 鼠标指示器最后出现 */
+  .scroll-indicator {
+    animation: fade-up-focus 1.4s cubic-bezier(0.22, 1, 0.36, 1) 1.6s forwards;
+  }
+}
+
+/* 移动端适配优化 */
 @media (max-width: 768px) {
-  .main-title {
-    font-size: 2.8rem !important;
+  .ada-hero-wrapper {
+    min-height: 600px;
   }
 
   .yellow-sun {
-    width: 100px;
-    height: 100px;
-    top: 10%;
+    top: 12%;
     right: 10%;
+  }
+
+  .hero-content {
+    margin-top: -5vh;
+    padding: 0 20px;
   }
 }
 </style>
-
-
-/* ==========================================
-终极动效：电影级空灵显现 (Cinematic Reveal)
-========================================== */
-
-/* 1. 定义极其丝滑的对焦浮现关键帧 */
-@keyframes ethereal-fade-up {
-0% {
-opacity: 0;
-transform: translateY(30px) scale(0.98);
-filter: blur(12px); /* 初始高斯模糊，打造朦胧感 */
-}
-100% {
-opacity: 1;
-transform: translateY(0) scale(1);
-filter: blur(0);
-}
-}
-
-/* 2. 定义太阳/月亮的极慢升空显现 */
-@keyframes sun-rise {
-0% {
-opacity: 0;
-transform: translateY(50px) scale(0.8);
-}
-100% {
-opacity: 1;
-transform: translateY(0) scale(1);
-}
-}
-
-/* 3. 为各个元素绑定动画与精确的延迟时间 (Staggered Delay) */
-
-/* 太阳最早升起 */
-.yellow-sun {
-animation: sun-rise 2s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
-/* 如果它本身有 transition，确保不要被覆盖 */
-}
-
-/* 第一行文字：艾达踏上了寻找 */
-.main-title .line1 {
-opacity: 0; /* 初始隐藏 */
-animation: ethereal-fade-up 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
-}
-
-/* 第二行文字：科技世界 的旅程 (延迟 0.5s) */
-.main-title .line2 {
-opacity: 0;
-animation: ethereal-fade-up 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.5s forwards;
-}
-
-/* 核心高亮词汇：延迟出现后的额外发光特效 */
-.main-title .highlight {
-display: inline-block;
-opacity: 0;
-/* 高亮词语比第二行整体再晚一丢丢显现，形成视觉焦点 */
-animation: ethereal-fade-up 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.7s forwards;
-}
-
-/* 副标题：娓娓道来 (延迟 0.9s) */
-.sub-title {
-opacity: 0;
-animation: ethereal-fade-up 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.9s forwards;
-}
-
-/* 底部跳动鼠标指示器：最后登场指引用户 (延迟 1.5s) */
-.scroll-indicator {
-opacity: 0;
-animation: ethereal-fade-up 1.5s cubic-bezier(0.22, 1, 0.36, 1) 1.5s forwards;
-}
