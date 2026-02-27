@@ -27,3 +27,5 @@ pnpm docs:dev
 # 构建生产版本
 pnpm docs:build
 ```
+
+<HomeResources />
