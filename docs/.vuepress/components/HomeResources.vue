@@ -12,8 +12,8 @@
         <div v-for="(category, cIndex) in section.categories.slice(0, 2)" :key="cIndex" class="sub-category">
           <h3 class="sub-title">{{ category.name }}</h3>
           <div class="flat-grid">
-            <a v-for="(item, iIndex) in category.items.slice(0, 4)" :key="iIndex" :href="item.link" target="_blank"
-              rel="noopener noreferrer" class="pure-flat-card">
+            <div v-for="(item, iIndex) in category.items.slice(0, 4)" :key="iIndex" @click="openLink(item.link)"
+              class="pure-flat-card">
               <div class="card-top">
                 <div class="icon-wrapper">
                   <img v-if="item.icon" :src="item.icon" :alt="item.name" class="brand-icon">
@@ -22,7 +22,7 @@
                 <span class="brand-name">{{ item.name }}</span>
               </div>
               <div class="card-bottom">{{ item.desc }}</div>
-            </a>
+            </div>
           </div>
         </div>
 
@@ -82,6 +82,13 @@ const resourcesData = reactive([
     }))
   }
 ]);
+
+// 使用纯 JS 处理跳转，彻底切断 VuePress 自动插入箭头的机制
+const openLink = (url) => {
+  if (url) {
+    window.open(url, '_blank', 'noopener,noreferrer');
+  }
+};
 </script>
 
 <style lang="scss" scoped>
