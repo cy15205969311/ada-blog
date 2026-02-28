@@ -21,7 +21,13 @@ export default defineUserConfig({
       { text: '跨境电商', link: '/ecommerce/' },
       { text: '关于', link: '/about/' }
     ],
-    sidebar: 'auto'
+    sidebar: 'auto',
+    // 启用深色模式切换
+    colorModeSwitch: true,
+    // 隐藏贡献者信息
+    contributors: false,
+    // 隐藏最近更新时间
+    lastUpdated: false
   }),
 
   plugins: [

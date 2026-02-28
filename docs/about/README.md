@@ -1,3 +1,6 @@
-# 关于
+---
+navbar: true
+sidebar: false
+---
 
-关于页面待完善
+<AboutPage />
