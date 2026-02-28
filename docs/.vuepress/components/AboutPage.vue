@@ -1,41 +1,47 @@
 <template>
-  <div class="about-product-page" data-page-type="about-final">
-    <!-- 主容器：最大宽度1200px居中 -->
-    <div class="about-container">
+  <div class="about-page-final">
+    <div class="about-content-wrapper">
+
+      <!-- 面包屑导航 -->
+      <nav class="breadcrumb-final">
+        <span @click="goHome" class="breadcrumb-link-final">首页</span>
+        <span class="breadcrumb-sep-final">></span>
+        <span class="breadcrumb-current-final">关于</span>
+      </nav>
 
       <!-- 头部区域 -->
-      <header class="about-hero">
-        <h1 class="about-hero-title">关于本站</h1>
-        <p class="about-hero-desc">
+      <header class="hero-section-final">
+        <h1 class="hero-title-final">关于本站</h1>
+        <p class="hero-desc-final">
           这是一个聚合了技术开发、新媒体运营和跨境电商资源的综合性导航平台。<br>
           我们致力于为创作者和开发者提供最优质的工具和资源推荐，帮助大家提高工作效率。
         </p>
       </header>
 
       <!-- 使命卡片 -->
-      <section class="about-mission-card">
-        <h2 class="about-section-title">我们的使命</h2>
-        <p class="about-mission-text">
+      <section class="mission-card-final">
+        <h2 class="mission-title-final">我们的使命</h2>
+        <p class="mission-text-final">
           在信息爆炸的时代，找到合适的工具往往比使用工具本身更耗时。我们的目标是建立一个精选的资源库，通过严格的筛选机制，只收录真正实用、高效的工具和资源，让每一次搜索都能直达价值。无论你是全栈开发者、自媒体创作者，还是跨境电商从业者，都能在这里找到提升效率的利器。
         </p>
       </section>
 
       <!-- 三大分类卡片 -->
-      <section class="about-features">
-        <div class="about-feature-card about-card-blue">
-          <div class="about-feature-icon">
+      <section class="features-section-final">
+        <div class="feature-item-final feature-blue-final">
+          <div class="feature-icon-final">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="16 18 22 12 16 6"></polyline>
               <polyline points="8 6 2 12 8 18"></polyline>
             </svg>
           </div>
-          <h3 class="about-feature-title">技术开发</h3>
-          <p class="about-feature-desc">收录主流前端框架、后端技术栈、UI组件库及开发者常用效能工具。</p>
+          <h3 class="feature-title-final">技术开发</h3>
+          <p class="feature-desc-final">收录主流前端框架、后端技术栈、UI组件库及开发者常用效能工具。</p>
         </div>
 
-        <div class="about-feature-card about-card-purple">
-          <div class="about-feature-icon">
+        <div class="feature-item-final feature-purple-final">
+          <div class="feature-icon-final">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
               stroke-linejoin="round">
               <circle cx="18" cy="5" r="3"></circle>
@@ -45,12 +51,12 @@
               <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
             </svg>
           </div>
-          <h3 class="about-feature-title">新媒体运营</h3>
-          <p class="about-feature-desc">汇集AI创作工具、内容设计素材、数据分析平台及运营辅助神器。</p>
+          <h3 class="feature-title-final">新媒体运营</h3>
+          <p class="feature-desc-final">汇集AI创作工具、内容设计素材、数据分析平台及运营辅助神器。</p>
         </div>
 
-        <div class="about-feature-card about-card-green">
-          <div class="about-feature-icon">
+        <div class="feature-item-final feature-green-final">
+          <div class="feature-icon-final">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
               stroke-linejoin="round">
               <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
@@ -58,16 +64,16 @@
               <path d="M16 10a4 4 0 0 1-8 0"></path>
             </svg>
           </div>
-          <h3 class="about-feature-title">跨境电商</h3>
-          <p class="about-feature-desc">精选指纹浏览器、选品分析工具、ERP系统及各类跨境电商必备插件。</p>
+          <h3 class="feature-title-final">跨境电商</h3>
+          <p class="feature-desc-final">精选指纹浏览器、选品分析工具、ERP系统及各类跨境电商必备插件。</p>
         </div>
       </section>
 
       <!-- 底部双列信息 -->
-      <section class="about-footer-info">
-        <div class="about-info-col">
-          <h3 class="about-info-title">技术栈</h3>
-          <ul class="about-tech-list">
+      <section class="footer-section-final">
+        <div class="footer-col-final">
+          <h3 class="footer-title-final">技术栈</h3>
+          <ul class="tech-stack-final">
             <li>VuePress 2.0 静态站点生成器</li>
             <li>Vue 3.5 前端框架</li>
             <li>Vite 构建工具</li>
@@ -75,21 +81,21 @@
           </ul>
         </div>
 
-        <div class="about-info-col">
-          <h3 class="about-info-title">联系我们</h3>
-          <p class="about-contact-intro">
+        <div class="footer-col-final">
+          <h3 class="footer-title-final">联系我们</h3>
+          <p class="contact-intro-final">
             如果您有优质的资源推荐，或者对本站有任何建议，欢迎通过以下方式联系我们：
           </p>
-          <div class="about-contact-item">
-            <svg class="about-contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
+          <div class="contact-row-final">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
               <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
               <polyline points="22,6 12,13 2,6"></polyline>
             </svg>
             <span>ada402135@gmail.com</span>
           </div>
-          <div class="about-contact-item">
-            <svg class="about-contact-icon" viewBox="0 0 24 24" fill="currentColor">
+          <div class="contact-row-final">
+            <svg viewBox="0 0 24 24" fill="currentColor">
               <path
                 d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
             </svg>
@@ -102,97 +108,122 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
-/* ==========================================
-   产品级关于页面 - 完全覆盖VuePress默认样式
-   使用全新命名空间 about-product-page
-========================================== */
+<script setup>
+const goHome = () => {
+  window.location.href = '/';
+};
+</script>
 
-/* 1. 强制隐藏VuePress默认页脚元素 */
-:global(.theme-default-content:has([data-page-type="about-final"]) ~ .page-meta),
-:global(.theme-default-content:has([data-page-type="about-final"]) ~ .page-nav) {
+<style lang="scss" scoped>
+/* 隐藏VuePress默认页脚 */
+:global(.theme-default-content:has(.about-page-final) ~ .page-meta),
+:global(.theme-default-content:has(.about-page-final) ~ .page-nav) {
   display: none !important;
-  visibility: hidden !important;
-  height: 0 !important;
-  overflow: hidden !important;
 }
 
-/* 2. 重置VuePress内容容器 */
-:global(.theme-default-content:has([data-page-type="about-final"])) {
+:global(.theme-default-content:has(.about-page-final)) {
   max-width: 100vw !important;
   padding: 0 !important;
   margin: 0 !important;
 }
 
-/* 3. 页面主容器 */
-.about-product-page {
+/* 主容器 - 不覆盖导航栏 */
+.about-page-final {
   width: 100%;
   min-height: calc(100vh - 3.6rem);
-  background: var(--c-bg, #ffffff);
-  padding: 3rem 1.5rem 4rem;
+  padding: 2rem 1.5rem 3rem;
+  background: var(--c-bg) !important;
 }
 
-/* 4. 内容容器 - 最大宽度1200px居中 */
-.about-container {
+.about-content-wrapper {
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
 }
 
-/* ========== 头部区域 ========== */
-.about-hero {
-  text-align: center;
-  margin-bottom: 3rem;
+/* 面包屑导航 */
+.breadcrumb-final {
+  font-size: 0.9rem;
+  color: var(--c-text-light);
+  margin-bottom: 1.5rem;
+  padding: 0.5rem 0;
 }
 
-.about-hero-title {
+.breadcrumb-link-final {
+  color: #3eaf7c;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.breadcrumb-link-final:hover {
+  opacity: 0.8;
+}
+
+.breadcrumb-sep-final {
+  margin: 0 0.5rem;
+  color: var(--c-text-lighter);
+}
+
+.breadcrumb-current-final {
+  color: var(--c-text);
+}
+
+/* 头部区域 */
+.hero-section-final {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  padding: 1rem 0;
+}
+
+.hero-title-final {
   font-size: 2.5rem;
   font-weight: 800;
-  color: #1e293b;
+  color: var(--c-text) !important;
   margin: 0 0 1rem 0;
   padding: 0;
   border: none;
   line-height: 1.2;
 }
 
-.about-hero-desc {
+.hero-desc-final {
   font-size: 1.1rem;
-  color: #64748b;
+  color: var(--c-text-light) !important;
   line-height: 1.7;
   max-width: 800px;
   margin: 0 auto;
 }
 
-/* ========== 使命卡片 ========== */
-.about-mission-card {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
+/* 使命卡片 */
+.mission-card-final {
+  background: var(--c-bg-light) !important;
+  border: 1px solid #e2e8f0 !important;
   border-radius: 12px;
   padding: 2rem 2.5rem;
   margin-bottom: 3rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
 }
 
-.about-section-title {
+.mission-title-final {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--c-text) !important;
   margin: 0 0 1rem 0;
   padding: 0;
   border: none;
 }
 
-.about-mission-text {
+.mission-text-final {
   font-size: 1rem;
-  color: #475569;
+  color: var(--c-text-light) !important;
   line-height: 1.8;
   text-align: left;
   margin: 0;
 }
 
-/* ========== 三大分类卡片 ========== */
-.about-features {
+/* 三大分类网格 */
+.features-section-final {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
@@ -200,23 +231,23 @@
 }
 
 @media (max-width: 768px) {
-  .about-features {
+  .features-section-final {
     grid-template-columns: 1fr;
   }
 }
 
-.about-feature-card {
+.feature-item-final {
   border-radius: 12px;
   padding: 2rem 1.5rem;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.about-feature-card:hover {
+.feature-item-final:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
-.about-feature-icon {
+.feature-icon-final {
   width: 48px;
   height: 48px;
   border-radius: 10px;
@@ -226,101 +257,97 @@
   margin-bottom: 1.2rem;
 }
 
-.about-feature-icon svg {
+.feature-icon-final svg {
   width: 24px;
   height: 24px;
 }
 
-.about-feature-title {
+.feature-title-final {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #1e293b;
+  color: var(--c-text) !important;
   margin: 0 0 0.8rem 0;
   padding: 0;
   border: none;
 }
 
-.about-feature-desc {
+.feature-desc-final {
   font-size: 0.95rem;
-  color: #64748b;
+  color: var(--c-text-light) !important;
   line-height: 1.6;
   margin: 0;
 }
 
-/* 马卡龙配色系统 */
-.about-card-blue {
-  background-color: #f0f6ff;
+/* 马卡龙配色 - 白天模式 */
+.feature-blue-final {
+  background-color: #f0f6ff !important;
 }
 
-.about-card-blue .about-feature-icon {
+.feature-blue-final .feature-icon-final {
   background-color: #dbeafe;
   color: #3b82f6;
 }
 
-.about-card-purple {
-  background-color: #f5f0ff;
+.feature-purple-final {
+  background-color: #f5f0ff !important;
 }
 
-.about-card-purple .about-feature-icon {
+.feature-purple-final .feature-icon-final {
   background-color: #f3e8ff;
   color: #a855f7;
 }
 
-.about-card-green {
-  background-color: #f0fdf4;
+.feature-green-final {
+  background-color: #f0fdf4 !important;
 }
 
-.about-card-green .about-feature-icon {
+.feature-green-final .feature-icon-final {
   background-color: #dcfce7;
   color: #22c55e;
 }
 
-/* ========== 底部双列信息 ========== */
-.about-footer-info {
+/* 底部双列信息 */
+.footer-section-final {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 3rem;
   padding-top: 3rem;
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid var(--c-border);
 }
 
 @media (max-width: 768px) {
-  .about-footer-info {
+  .footer-section-final {
     grid-template-columns: 1fr;
     gap: 2rem;
   }
 }
 
-.about-info-col {
-  /* 列容器 */
-}
-
-.about-info-title {
+.footer-title-final {
   font-size: 1.3rem;
   font-weight: 700;
-  color: #1e293b;
+  color: var(--c-text) !important;
   margin: 0 0 1.2rem 0;
   padding: 0;
   border: none;
 }
 
 /* 技术栈列表 */
-.about-tech-list {
+.tech-stack-final {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.about-tech-list li {
+.tech-stack-final li {
   position: relative;
   padding-left: 1.5rem;
   margin-bottom: 0.8rem;
   font-size: 1rem;
-  color: #475569;
+  color: var(--c-text-light) !important;
   line-height: 1.6;
 }
 
-.about-tech-list li::before {
+.tech-stack-final li::before {
   content: '';
   position: absolute;
   left: 0;
@@ -332,119 +359,104 @@
 }
 
 /* 联系信息 */
-.about-contact-intro {
+.contact-intro-final {
   font-size: 1rem;
-  color: #475569;
+  color: var(--c-text-light) !important;
   line-height: 1.6;
   margin: 0 0 1.2rem 0;
 }
 
-.about-contact-item {
+.contact-row-final {
   display: flex;
   align-items: center;
   margin-bottom: 1rem;
+  color: #3eaf7c;
 }
 
-.about-contact-icon {
+.contact-row-final svg {
   width: 20px;
   height: 20px;
-  color: #3eaf7c;
   margin-right: 0.8rem;
   flex-shrink: 0;
 }
 
-.about-contact-item span {
+.contact-row-final span {
   font-size: 1rem;
-  color: #475569;
+  color: var(--c-text-light) !important;
 }
 
-/* ========== 暗黑模式适配 ========== */
-html.dark .about-product-page {
-  background: var(--c-bg, #1a1a1a);
+/* 暗黑模式 - 双重选择器确保生效 */
+html[data-theme='dark'] .mission-card-final,
+html.dark .mission-card-final {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
 }
 
-html.dark .about-hero-title,
-html.dark .about-section-title,
-html.dark .about-feature-title,
-html.dark .about-info-title {
-  color: #f1f5f9;
+html[data-theme='dark'] .feature-blue-final,
+html.dark .feature-blue-final {
+  background-color: rgba(59, 130, 246, 0.1) !important;
 }
 
-html.dark .about-hero-desc,
-html.dark .about-mission-text,
-html.dark .about-feature-desc,
-html.dark .about-tech-list li,
-html.dark .about-contact-intro,
-html.dark .about-contact-item span {
-  color: #94a3b8;
+html[data-theme='dark'] .feature-blue-final .feature-icon-final,
+html.dark .feature-blue-final .feature-icon-final {
+  background-color: rgba(59, 130, 246, 0.2) !important;
 }
 
-html.dark .about-mission-card {
-  background-color: rgba(255, 255, 255, 0.03);
-  border-color: rgba(255, 255, 255, 0.1);
+html[data-theme='dark'] .feature-purple-final,
+html.dark .feature-purple-final {
+  background-color: rgba(168, 85, 247, 0.1) !important;
 }
 
-html.dark .about-card-blue {
-  background-color: rgba(59, 130, 246, 0.1);
+html[data-theme='dark'] .feature-purple-final .feature-icon-final,
+html.dark .feature-purple-final .feature-icon-final {
+  background-color: rgba(168, 85, 247, 0.2) !important;
 }
 
-html.dark .about-card-blue .about-feature-icon {
-  background-color: rgba(59, 130, 246, 0.2);
+html[data-theme='dark'] .feature-green-final,
+html.dark .feature-green-final {
+  background-color: rgba(34, 197, 94, 0.1) !important;
 }
 
-html.dark .about-card-purple {
-  background-color: rgba(168, 85, 247, 0.1);
+html[data-theme='dark'] .feature-green-final .feature-icon-final,
+html.dark .feature-green-final .feature-icon-final {
+  background-color: rgba(34, 197, 94, 0.2) !important;
 }
 
-html.dark .about-card-purple .about-feature-icon {
-  background-color: rgba(168, 85, 247, 0.2);
+html[data-theme='dark'] .feature-item-final:hover,
+html.dark .feature-item-final:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
 }
 
-html.dark .about-card-green {
-  background-color: rgba(34, 197, 94, 0.1);
-}
-
-html.dark .about-card-green .about-feature-icon {
-  background-color: rgba(34, 197, 94, 0.2);
-}
-
-html.dark .about-footer-info {
-  border-top-color: rgba(255, 255, 255, 0.1);
-}
-
-/* ========== 响应式优化 ========== */
+/* 响应式优化 */
 @media (max-width: 960px) {
-  .about-product-page {
-    padding: 2rem 1rem 3rem;
+  .about-page-final {
+    padding: 1.5rem 1rem 2.5rem;
   }
 
-  .about-hero-title {
+  .hero-title-final {
     font-size: 2rem;
   }
 
-  .about-hero-desc {
+  .hero-desc-final {
     font-size: 1rem;
   }
 
-  .about-mission-card {
+  .mission-card-final {
     padding: 1.5rem 1.8rem;
-  }
-
-  .about-section-title {
-    font-size: 1.3rem;
   }
 }
 
 @media (max-width: 640px) {
-  .about-hero-title {
+  .hero-title-final {
     font-size: 1.75rem;
   }
 
-  .about-mission-card {
+  .mission-card-final {
     padding: 1.2rem 1.5rem;
   }
 
-  .about-feature-card {
+  .feature-item-final {
     padding: 1.5rem 1.2rem;
   }
 }
