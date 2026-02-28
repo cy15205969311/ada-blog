@@ -86,7 +86,14 @@ const resourcesData = reactive([
 // 使用纯 JS 处理跳转，彻底切断 VuePress 自动插入箭头的机制
 const openLink = (url) => {
   if (url) {
-    window.open(url, '_blank', 'noopener,noreferrer');
+    // 判断是否为内部链接（以 / 开头且不包含协议）
+    if (url.startsWith('/') && !url.startsWith('//')) {
+      // 内部链接：当前页面跳转
+      window.location.href = url;
+    } else {
+      // 外部链接：新标签页打开
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
   }
 };
 </script>
