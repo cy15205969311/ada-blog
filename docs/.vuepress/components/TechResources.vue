@@ -15,8 +15,30 @@
       </div>
       <p class="v4-section-desc">收录常用的技术框架、组件库和开发工具，方便快速查阅。</p>
 
+      <!-- 搜索框 -->
+      <div class="v4-search-wrapper">
+        <div class="v4-search-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" class="v4-search-icon">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input v-model="searchQuery" type="text" class="v4-search-input" placeholder="输入关键字搜索资源或描述..." />
+        </div>
+      </div>
+
+      <!-- 空状态 -->
+      <div v-if="filteredCategories.length === 0" class="v4-empty-state">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+          stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="8" y1="12" x2="16" y2="12"></line>
+        </svg>
+        <p>未找到与 "<span>{{ searchQuery }}</span>" 相关的资源</p>
+      </div>
+
       <!-- 分类卡片区域 -->
-      <div v-for="category in techData" :key="category.category" class="category-block">
+      <div v-for="category in filteredCategories" :key="category.category" class="category-block">
         <div class="category-title">
           {{ category.category }}
           <span class="category-count">{{ category.items.length }}</span>
@@ -57,7 +79,31 @@
 </template>
 
 <script setup>
+import { ref, computed } from 'vue';
 import { techData } from '../data/techData.js';
+
+// 搜索关键词绑定
+const searchQuery = ref('');
+
+// 智能过滤计算属性
+const filteredCategories = computed(() => {
+  const query = searchQuery.value.toLowerCase().trim();
+
+  // 如果搜索框为空，直接返回原始数据
+  if (!query) return techData;
+
+  return techData.map(category => {
+    return {
+      ...category,
+      // 双重匹配：只要名称或描述中包含搜索词，就保留该卡片
+      items: category.items.filter(item => {
+        const matchTitle = item.title && item.title.toLowerCase().includes(query);
+        const matchDesc = item.desc && item.desc.toLowerCase().includes(query);
+        return matchTitle || matchDesc;
+      })
+    };
+  }).filter(category => category.items.length > 0);
+});
 
 // 使用纯 JS 处理跳转，彻底切断 VuePress 自动插入箭头的机制
 const openLink = (url) => {
@@ -363,6 +409,109 @@ html.dark .tech-card {
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6) !important;
   }
 }
+
+/* ==========================================
+   搜索框组件样式
+========================================== */
+.v4-search-wrapper {
+  margin-bottom: 2.5rem;
+  display: flex;
+}
+
+.v4-search-box {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  /* 搜索框最大宽度 */
+}
+
+.v4-search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: #94a3b8;
+  transition: color 0.3s ease;
+}
+
+.v4-search-input {
+  width: 100%;
+  padding: 12px 16px 12px 42px;
+  border: 1px solid var(--c-border-soft, #e2e8f0);
+  border-radius: 10px;
+  font-size: 0.95rem;
+  color: #1e293b;
+  background: #ffffff;
+  transition: all 0.3s ease;
+  outline: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.v4-search-input::placeholder {
+  color: #94a3b8;
+}
+
+.v4-search-input:focus {
+  border-color: #3eaf7c;
+  box-shadow: 0 0 0 3px rgba(62, 175, 124, 0.15);
+}
+
+.v4-search-box:focus-within .v4-search-icon {
+  color: #3eaf7c;
+}
+
+/* 空状态样式 */
+.v4-empty-state {
+  text-align: center;
+  padding: 4rem 1rem;
+  color: #64748b;
+  background: #f8fafc;
+  border-radius: 12px;
+  border: 1px dashed #e2e8f0;
+  margin-bottom: 4rem;
+}
+
+.v4-empty-state svg {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 1rem;
+  color: #cbd5e1;
+}
+
+.v4-empty-state p {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.v4-empty-state span {
+  color: #3eaf7c;
+  font-weight: 600;
+}
+
+/* 暗黑模式兼容 */
+:global(html.dark) .v4-search-input,
+:global(html[data-theme='dark']) .v4-search-input {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #f8f9fa;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+:global(html.dark) .v4-search-input:focus,
+:global(html[data-theme='dark']) .v4-search-input:focus {
+  border-color: #4ade80;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.15);
+}
+
+:global(html.dark) .v4-empty-state,
+:global(html[data-theme='dark']) .v4-empty-state {
+  background: rgba(255, 255, 255, 0.02);
+  border-color: rgba(255, 255, 255, 0.08);
+  color: #94a3b8;
+}
 </style>
 
 <style>
@@ -429,5 +578,47 @@ html[data-theme='dark'] .navbar {
 html.dark .theme-container,
 html[data-theme='dark'] .theme-container {
   background: transparent !important;
+}
+
+/* ==========================================
+   搜索框与缺省页：暗黑模式终极强制适配
+========================================== */
+html.dark .v4-search-input,
+html[data-theme='dark'] .v4-search-input {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  color: #f8f9fa !important;
+}
+
+/* 搜索框聚焦状态下的绿色光晕 */
+html.dark .v4-search-input:focus,
+html[data-theme='dark'] .v4-search-input:focus {
+  border-color: #4ade80 !important;
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.15) !important;
+}
+
+/* 搜索图标在暗黑下的柔和灰 */
+html.dark .v4-search-icon,
+html[data-theme='dark'] .v4-search-icon {
+  color: #64748b !important;
+}
+
+html.dark .v4-search-box:focus-within .v4-search-icon,
+html[data-theme='dark'] .v4-search-box:focus-within .v4-search-icon {
+  color: #4ade80 !important;
+}
+
+/* 搜索无结果时的空状态盒子暗黑化 */
+html.dark .v4-empty-state,
+html[data-theme='dark'] .v4-empty-state {
+  background-color: rgba(255, 255, 255, 0.02) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  color: #94a3b8 !important;
+}
+
+html.dark .v4-empty-state svg,
+html[data-theme='dark'] .v4-empty-state svg {
+  color: #475569 !important;
 }
 </style>
