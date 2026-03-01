@@ -22,7 +22,18 @@
           <span class="category-count">{{ category.items.length }}</span>
         </div>
         <div class="card-grid">
-          <div v-for="item in category.items" :key="item.title" @click="openLink(item.link)" class="tech-card">
+          <div v-for="(item, iIndex) in category.items" :key="item.title" @click="openLink(item.link)" class="tech-card"
+            v-motion :initial="{ opacity: 0, y: 30 }" :visibleOnce="{
+              opacity: 1,
+              y: 0,
+              transition: {
+                type: 'spring',
+                stiffness: 250,
+                damping: 25,
+                mass: 1,
+                delay: iIndex * 120
+              }
+            }">
             <div class="card-header">
               <img v-if="item.icon" :src="item.icon" class="native-logo" alt="logo" />
               <div class="title">{{ item.title }}</div>
@@ -237,7 +248,8 @@ const getAllItems = () => {
   border: 1px solid rgba(0, 0, 0, 0.1) !important;
   border-radius: 8px !important;
   text-decoration: none !important;
-  transition: all 0.2s ease !important;
+  /* 剥夺 CSS 对 transform 和 opacity 的控制权，全权交给 JS 动效引擎，仅保留色彩相关的过渡 */
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
   box-sizing: border-box !important;
   min-height: 120px !important;
   position: relative !important;
