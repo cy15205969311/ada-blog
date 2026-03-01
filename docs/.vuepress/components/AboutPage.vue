@@ -2,12 +2,8 @@
   <div class="about-page-final">
     <div class="about-content-wrapper">
 
-      <!-- 面包屑导航 -->
-      <nav class="breadcrumb-final">
-        <span @click="goHome" class="breadcrumb-link-final">首页</span>
-        <span class="breadcrumb-sep-final">></span>
-        <span class="breadcrumb-current-final">关于</span>
-      </nav>
+      <!-- 动态面包屑导航 -->
+      <Breadcrumb />
 
       <!-- 头部区域 -->
       <header class="hero-section-final">
@@ -109,9 +105,7 @@
 </template>
 
 <script setup>
-const goHome = () => {
-  window.location.href = '/';
-};
+// 不再需要 goHome 函数，由 Breadcrumb 组件处理
 </script>
 
 <style lang="scss" scoped>
@@ -139,33 +133,6 @@ const goHome = () => {
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
-}
-
-/* 面包屑导航 */
-.breadcrumb-final {
-  font-size: 0.9rem;
-  color: var(--c-text-light);
-  margin-bottom: 1.5rem;
-  padding: 0.5rem 0;
-}
-
-.breadcrumb-link-final {
-  color: #3eaf7c;
-  cursor: pointer;
-  transition: opacity 0.2s;
-}
-
-.breadcrumb-link-final:hover {
-  opacity: 0.8;
-}
-
-.breadcrumb-sep-final {
-  margin: 0 0.5rem;
-  color: var(--c-text-lighter);
-}
-
-.breadcrumb-current-final {
-  color: var(--c-text);
 }
 
 /* 头部区域 */

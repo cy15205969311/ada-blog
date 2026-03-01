@@ -1,6 +1,12 @@
 <template>
-  <div class="tech-breakout-wrapper">
-    <div class="tech-inner-container">
+  <div class="v4-platform-wrapper">
+    <!-- 幽灵垫片：动态计算导航栏高度 + 呼吸感 -->
+    <div class="v4-navbar-spacer"></div>
+
+    <div class="v4-content-island">
+      <!-- 动态面包屑导航 -->
+      <Breadcrumb />
+
       <!-- 顶部标题区域 -->
       <div class="page-header">
         <h1 class="page-title">计算机技术</h1>
@@ -34,7 +40,6 @@
         </div>
       </div>
       <SiteFooter :items="getAllItems()" />
-
     </div>
   </div>
 </template>
@@ -60,30 +65,40 @@ const getAllItems = () => {
 </script>
 
 <style lang="scss" scoped>
-/* --- 越狱结构保持不变 --- */
-.tech-breakout-wrapper {
+/* ==========================================
+   V4 全局容器宽度接管与安全区修复
+========================================== */
+:global(.theme-default-content:has(.v4-platform-wrapper)) {
+  max-width: 100vw !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.v4-platform-wrapper {
   width: 100vw;
   position: relative;
   left: 50%;
   transform: translateX(-50%);
-  display: flex;
-  justify-content: center;
   background: transparent;
 }
 
-.tech-inner-container {
+/* 核心杀招：幽灵垫片，动态计算导航栏高度并加上额外的留白 */
+.v4-navbar-spacer {
   width: 100%;
+  /* VuePress 默认导航栏高度通常是 3.6rem，外加 2rem 的绝佳呼吸感 */
+  height: calc(var(--navbar-height, 3.6rem) + 2rem) !important;
+  display: block;
+}
+
+.v4-content-island {
   max-width: 1200px;
-  padding: 0rem 1rem 2rem 2rem;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
-  // background-color: #3eaf7c;
+  margin: 0 auto;
+  padding: 0 24px 4rem;
 }
 
 /* --- 顶部标题区域 --- */
 .page-header {
+  background-color: #3eaf7c;
   padding: 0 0 1.5rem 0;
   margin-bottom: 0.5rem;
   // background-color: rebeccapurple;
