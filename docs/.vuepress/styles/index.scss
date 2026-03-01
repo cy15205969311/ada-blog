@@ -153,3 +153,29 @@ html.dark div[class*="language-"] {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
   border: 1px solid rgba(255, 255, 255, 0.05) !important;
 }
+
+
+/* ==========================================
+   全局暗黑模式：高定深空蓝灰主题 (#121828)
+========================================== */
+html.dark,
+html[data-theme='dark'] {
+  /* 1. 全局主底色：替换原生枯燥的深灰 */
+  --c-bg: #121828 !important;
+
+  /* 2. 悬浮/次级底色（用于 Navbar、侧边栏等，需比主底色稍微亮极其微弱的一点点建立层次） */
+  --c-bg-light: #161e31 !important;
+  --c-bg-lighter: #1d273d !important;
+
+  /* 3. 边框色系同步微调，使其融入蓝灰氛围，拒绝脏脏的纯灰边框 */
+  --c-border: rgba(255, 255, 255, 0.06) !important;
+  --c-border-dark: rgba(255, 255, 255, 0.12) !important;
+
+  /* 4. 滚动条轨道颜色融入背景 */
+  --c-bg-color-scrollbar: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* 顺便干掉可能残留的原生背景色干扰 */
+body {
+  transition: background-color 0.3s ease;
+}

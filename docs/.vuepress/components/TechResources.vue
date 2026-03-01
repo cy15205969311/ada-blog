@@ -403,4 +403,31 @@ html[data-theme='dark'] .v4-crumb-current {
   color: #e2e8f0 !important;
   /* 高亮冷白灰，彻底告别暗沉，确保极佳阅读性 */
 }
+
+/* ==========================================
+   终极暴力覆盖：全站暗黑背景色强制统一为 #121828
+========================================== */
+html.dark body,
+html[data-theme='dark'] body,
+html.dark .navbar,
+html[data-theme='dark'] .navbar,
+html.dark .sidebar,
+html[data-theme='dark'] .sidebar,
+html.dark .page,
+html[data-theme='dark'] .page {
+  background-color: #121828 !important;
+  --c-bg: #121828 !important;
+}
+
+/* 导航栏底部边框融入暗色 */
+html.dark .navbar,
+html[data-theme='dark'] .navbar {
+  border-bottom-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* 确保页面最外层包裹器透明，露出 body 的深空蓝灰 */
+html.dark .theme-container,
+html[data-theme='dark'] .theme-container {
+  background: transparent !important;
+}
 </style>
