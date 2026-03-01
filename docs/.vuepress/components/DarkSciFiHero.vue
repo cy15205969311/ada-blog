@@ -20,15 +20,14 @@
       <div class="hero-content">
         <h1 class="main-title">
           <div class="line-wrapper">
-            <div class="line1">Ada's on a journey to find </div>
+            <div class="line1">Welcome to </div>
           </div>
           <div class="line-wrapper">
-            <div class="line2"><span class="highlight">The Tech World</span> </div>
+            <div class="line2"><span class="highlight">My Blog</span> </div>
           </div>
         </h1>
         <div class="sub-wrapper">
-          <p class="sub-title">Follow her as she goes on the hunt for creative ideas and turns all her wonderful ideas
-            into reality.</p>
+          <p class="sub-title">Exploring the tech world, sharing thoughts on creativity and implementation.</p>
         </div>
         <div class="action-buttons">
           <a href="/tech/" class="btn primary-btn">🚀 开始探索</a>

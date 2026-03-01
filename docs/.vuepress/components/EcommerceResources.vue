@@ -639,4 +639,14 @@ html.dark .v4-empty-state svg,
 html[data-theme='dark'] .v4-empty-state svg {
   color: #475569 !important;
 }
+
+/* ==========================================
+   分类数量胶囊徽章：暗黑模式荧光绿适配
+========================================== */
+html.dark .category-count,
+html[data-theme='dark'] .category-count {
+  background: rgba(74, 222, 128, 0.15) !important;
+  color: #4ade80 !important;
+  border: 1px solid rgba(74, 222, 128, 0.3) !important;
+}
 </style>

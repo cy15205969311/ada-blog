@@ -17,5 +17,8 @@
     "vue": "^3.5.29",
     "vue-router": "^5.0.3",
     "vuepress": "2.0.0-rc.26"
+  },
+  "dependencies": {
+    "@vueuse/motion": "^3.0.3"
   }
 }
