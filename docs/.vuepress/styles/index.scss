@@ -235,3 +235,16 @@ body {
     padding-bottom: 2rem !important;
   }
 }
+
+
+/* ==========================================
+   全站物理级防溢出：彻底根治横向左右滑动
+========================================== */
+html,
+body,
+#app,
+.theme-container {
+  max-width: 100vw !important;
+  overflow-x: hidden !important;
+  /* 强行裁切所有超出屏幕宽度的幽灵元素 */
+}

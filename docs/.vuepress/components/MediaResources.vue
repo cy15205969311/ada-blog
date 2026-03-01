@@ -199,10 +199,12 @@ const getAllItems = () => {
   border-radius: 2px;
 }
 
+/* --- 描述文本间距回调 --- */
 .v4-section-desc {
   font-size: 0.95rem;
   color: #64748b;
-  margin-bottom: 3rem !important;
+  /* 核心修改：将底部间距从 3rem 缩减到 1.5rem，让它与搜索框产生"亲密感" */
+  margin-bottom: 1.5rem !important;
   line-height: 1.6;
   transition: color 0.3s;
 }
@@ -385,41 +387,42 @@ html.dark .tech-card {
 }
 
 /* ==========================================
-   搜索框组件样式
+/* ==========================================
+   搜索框组件：极简文档风 (对齐图2标准)
 ========================================== */
 .v4-search-wrapper {
-  margin-bottom: 2.5rem;
-  display: flex;
+  /* 核心优化：大幅缩小紫色的上下占位空间 */
+  margin-top: 1.2rem !important;
+  margin-bottom: 2rem !important;
+  display: flex !important;
+  justify-content: flex-start !important;
+  /* 确保靠左对齐 */
+  width: 100%;
 }
 
 .v4-search-box {
   position: relative;
   width: 100%;
-  max-width: 420px;
-}
-
-.v4-search-icon {
-  position: absolute;
-  left: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 18px;
-  height: 18px;
-  color: #94a3b8;
-  transition: color 0.3s ease;
+  max-width: 420px !important;
+  /* 桌面端黄金宽度 */
 }
 
 .v4-search-input {
-  width: 100%;
-  padding: 12px 16px 12px 42px;
-  border: 1px solid var(--c-border-soft, #e2e8f0);
-  border-radius: 10px;
-  font-size: 0.95rem;
-  color: #1e293b;
-  background: #ffffff;
-  transition: all 0.3s ease;
+  width: 100% !important;
+  height: 42px !important;
+  /* 极简纤细高度 */
+  padding: 0 16px 0 38px !important;
+  /* 完美的文本内边距 */
+  font-size: 0.95rem !important;
+  border: 1px solid var(--c-border-soft, #e2e8f0) !important;
+  border-radius: 6px !important;
+  /* 收敛圆角，增强严谨感 */
+  background-color: transparent !important;
+  box-shadow: none !important;
+  /* 彻底移除阴影，实现绝对扁平 */
+  color: #1e293b !important;
+  transition: all 0.2s ease !important;
   outline: none;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
 }
 
 .v4-search-input::placeholder {
@@ -427,12 +430,25 @@ html.dark .tech-card {
 }
 
 .v4-search-input:focus {
-  border-color: #3eaf7c;
-  box-shadow: 0 0 0 3px rgba(62, 175, 124, 0.15);
+  border-color: #3eaf7c !important;
+  box-shadow: 0 0 0 2px rgba(62, 175, 124, 0.1) !important;
+  /* 极其微弱的聚焦光环 */
+}
+
+.v4-search-icon {
+  position: absolute;
+  left: 14px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 16px !important;
+  /* 缩小图标尺寸 */
+  height: 16px !important;
+  color: #94a3b8 !important;
+  transition: color 0.2s ease;
 }
 
 .v4-search-box:focus-within .v4-search-icon {
-  color: #3eaf7c;
+  color: #3eaf7c !important;
 }
 
 .v4-empty-state {
@@ -464,17 +480,16 @@ html.dark .tech-card {
 
 :global(html.dark) .v4-search-input,
 :global(html[data-theme='dark']) .v4-search-input {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.1);
-  color: #f8f9fa;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  color: #f8f9fa !important;
 }
 
 :global(html.dark) .v4-search-input:focus,
 :global(html[data-theme='dark']) .v4-search-input:focus {
-  border-color: #4ade80;
-  background: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.15);
+  border-color: #4ade80 !important;
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.15) !important;
 }
 
 :global(html.dark) .v4-empty-state,
@@ -482,6 +497,38 @@ html.dark .tech-card {
   background: rgba(255, 255, 255, 0.02);
   border-color: rgba(255, 255, 255, 0.08);
   color: #94a3b8;
+}
+
+/* ==========================================
+   移动端 (手机) 物理边界与安全区强制修复
+========================================== */
+@media (max-width: 768px) {
+
+  /* 强制恢复左右 20px 的安全区，防止内容贴死屏幕边缘 */
+  .v4-content-island {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    overflow-x: hidden !important;
+    /* 掐断由内边距撑开导致的横向滚动条 */
+  }
+
+  /* 移动端面包屑字体微缩，防止过长换行 */
+  .v4-breadcrumb-nav {
+    font-size: 0.85rem !important;
+  }
+
+  /* 移动端搜索框响应式覆盖 */
+  .v4-search-wrapper {
+    margin-top: 1rem !important;
+    margin-bottom: 1.8rem !important;
+  }
+
+  .v4-search-box {
+    max-width: 85% !important;
+    /* 移动端全宽铺满 */
+  }
 }
 </style>
 
