@@ -13,7 +13,17 @@
           <h3 class="home-res-v5-subtitle">{{ category.name }}</h3>
           <div class="home-res-v5-grid">
             <div v-for="(item, iIndex) in category.items.slice(0, 4)" :key="iIndex" @click="openLink(item.link)"
-              class="home-res-v5-card">
+              class="home-res-v5-card" v-motion :initial="{ opacity: 0, y: 30 }" :visibleOnce="{
+                opacity: 1,
+                y: 0,
+                transition: {
+                  type: 'spring',
+                  stiffness: 250,
+                  damping: 25,
+                  mass: 1,
+                  delay: iIndex * 120
+                }
+              }">
               <div class="home-res-v5-card-top">
                 <div class="home-res-v5-icon">
                   <img v-if="item.icon" :src="item.icon" :alt="item.name" class="home-res-v5-img">
@@ -219,7 +229,8 @@ const openLink = (url) => {
   border: 1px solid #e5e7eb;
   border-radius: 12px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
+  /* 将 Transform 和 Opacity 的控制权交给 JS 动效引擎，仅保留色彩与阴影的 CSS 过渡 */
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
   cursor: pointer;
 }
 
