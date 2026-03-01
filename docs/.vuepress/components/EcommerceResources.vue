@@ -7,11 +7,13 @@
       <!-- 动态面包屑导航 -->
       <Breadcrumb />
 
-      <!-- 顶部标题区域 -->
-      <div class="page-header">
-        <h1 class="page-title">跨境电商</h1>
-        <p class="page-desc">收录跨境电商必备的浏览器插件、ERP系统、选品工具和货源平台。</p>
+      <!-- 顶部标题区域（紧凑版） -->
+      <div class="v4-section-header v4-tight-header">
+        <div class="v4-title-wrap">
+          <h1 class="v4-main-title v4-fitted-title">跨境电商</h1>
+        </div>
       </div>
+      <p class="v4-section-desc">收录跨境电商必备的浏览器插件、ERP系统、选品工具和货源平台。</p>
 
       <!-- 分类卡片区域 -->
       <div v-for="category in ecommerceData" :key="category.category" class="category-block">
@@ -91,37 +93,94 @@ const getAllItems = () => {
 .v4-content-island {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 24px 4rem;
+  padding: 0 24px 3rem;
 }
 
-/* --- 顶部标题区域 --- */
-.page-header {
-  padding: 0 0 1.5rem 0;
-  margin-bottom: 0.5rem;
+/* ==========================================
+   微调后：面包屑与大标题的黄金呼吸距
+========================================== */
+
+.v4-navbar-spacer {
+  width: 100%;
+  height: calc(var(--navbar-height, 3.6rem) + 1.2rem) !important;
+  display: block;
 }
 
-.page-title {
-  font-size: 1.75rem;
-  font-weight: 700;
-  color: var(--c-text);
-  margin: 0 0 0.5rem 0;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid var(--c-border);
-  line-height: 1.3;
+.v4-tight-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 0 !important;
+  border-bottom: 1px solid var(--c-border-soft, #f1f3f5);
+  padding-bottom: 4px !important;
+  margin-bottom: 1.5rem !important;
 }
 
-.page-desc {
+.v4-title-wrap {
+  position: relative;
+}
+
+.v4-fitted-title {
+  font-size: 1.6rem !important;
+  font-weight: 800 !important;
+  margin: 0 !important;
+  color: #1e293b !important;
+  border: none !important;
+  line-height: 1.3 !important;
+  padding-top: 4px !important;
+  padding-bottom: 12px !important;
+}
+
+.v4-fitted-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 36px;
+  height: 4px;
+  background: #3eaf7c;
+  border-radius: 2px;
+}
+
+.v4-section-desc {
   font-size: 0.95rem;
-  color: var(--c-text-light);
-  margin: 1rem 0 0 0;
+  color: #64748b;
+  margin-bottom: 3rem !important;
   line-height: 1.6;
+  transition: color 0.3s;
 }
 
+:global(html.dark) .v4-fitted-title {
+  color: #f1f5f9 !important;
+}
+
+:global(html.dark) .v4-section-desc {
+  color: #94a3b8 !important;
+}
+
+:global(html.dark) .v4-tight-header {
+  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* ==========================================
+   子分类大模块间距调整（解决红框拥挤问题）
+========================================== */
+.category-block {
+  /* 将底部间距大幅拉开，提供两个大模块之间的视觉缓冲 (建议 3.5rem 到 4.5rem) */
+  margin-bottom: 4rem !important;
+}
+
+/* 细节优化：最后一个分类不需要底部间距，避免撑大整个页面的底部留白 */
+.category-block:last-child {
+  margin-bottom: 1rem !important;
+}
+
+/* 顺便微调一下小标题和下方卡片网格的间距（让标题和自己的卡片稍微贴紧一点，显得更有关联性） */
 .category-title {
   font-size: 1.25rem;
   font-weight: 600;
   color: var(--c-text);
-  margin-bottom: 1rem;
+  margin-bottom: 1.2rem !important;
   padding-left: 10px;
   border-left: 4px solid #3eaf7c;
   line-height: 1.2;

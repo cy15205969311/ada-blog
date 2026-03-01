@@ -7,12 +7,13 @@
       <!-- 动态面包屑导航 -->
       <Breadcrumb />
 
-      <!-- 顶部标题区域 -->
-      <div class="page-header">
-        <h1 class="page-title">计算机技术</h1>
-        <hr>
-        <p class="page-desc">收录常用的技术框架、组件库和开发工具，方便快速查阅。</p>
+      <!-- 顶部标题区域（紧凑版） -->
+      <div class="v4-section-header v4-tight-header">
+        <div class="v4-title-wrap">
+          <h1 class="v4-main-title v4-fitted-title">计算机技术</h1>
+        </div>
       </div>
+      <p class="v4-section-desc">收录常用的技术框架、组件库和开发工具，方便快速查阅。</p>
 
       <!-- 分类卡片区域 -->
       <div v-for="category in techData" :key="category.category" class="category-block">
@@ -82,50 +83,119 @@ const getAllItems = () => {
   background: transparent;
 }
 
-/* 核心杀招：幽灵垫片，动态计算导航栏高度并加上额外的留白 */
+/* 核心杀招：幽灵垫片，缩小高度让内容更贴顶 */
 .v4-navbar-spacer {
   width: 100%;
-  /* VuePress 默认导航栏高度通常是 3.6rem，外加 2rem 的绝佳呼吸感 */
-  height: calc(var(--navbar-height, 3.6rem) + 2rem) !important;
+  height: calc(var(--navbar-height, 3.6rem) + 1.2rem) !important;
   display: block;
 }
 
 .v4-content-island {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 24px 4rem;
+  padding: 0 24px 3rem;
 }
 
-/* --- 顶部标题区域 --- */
-.page-header {
-  background-color: #3eaf7c;
-  padding: 0 0 1.5rem 0;
-  margin-bottom: 0.5rem;
-  // background-color: rebeccapurple;
+/* ==========================================
+   微调后：面包屑与大标题的黄金呼吸距
+========================================== */
+
+.v4-navbar-spacer {
+  width: 100%;
+  height: calc(var(--navbar-height, 3.6rem) + 1.2rem) !important;
+  display: block;
 }
 
-.page-title {
-  font-size: 1.75rem;
-  font-weight: 700;
-  color: var(--c-text);
-  margin: 0 0 0.5rem 0;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid var(--c-border);
-  line-height: 1.3;
+.v4-content-island {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px 3rem;
 }
 
-.page-desc {
+/* 标题头部（呼吸感版） */
+.v4-tight-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 0 !important;
+  border-bottom: 1px solid var(--c-border-soft, #f1f3f5);
+  /* 【回调间距】稍微给整个头部底部留点空间 */
+  padding-bottom: 4px !important;
+  /* 【回调间距】拉开标题与下方描述段落的距离 */
+  margin-bottom: 1.5rem !important;
+}
+
+.v4-title-wrap {
+  position: relative;
+}
+
+/* 大标题物理级高度微调，释放绿色下划线 */
+.v4-fitted-title {
+  font-size: 1.6rem !important;
+  font-weight: 800 !important;
+  margin: 0 !important;
+  color: #1e293b !important;
+  border: none !important;
+  /* 【回调间距】行高从 1.2 微微放宽到 1.3，字形更舒展 */
+  line-height: 1.3 !important;
+  padding-top: 4px !important;
+  /* 【核心回调】把绿色下划线往下推 12px，彻底解决绿线压字的问题 */
+  padding-bottom: 12px !important;
+}
+
+/* 绿色下划线 */
+.v4-fitted-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 36px;
+  height: 4px;
+  background: #3eaf7c;
+  border-radius: 2px;
+}
+
+/* 描述文本间距微调 */
+.v4-section-desc {
   font-size: 0.95rem;
-  color: var(--c-text-light);
-  margin: 1rem 0 0 0;
+  color: #64748b;
+  margin-bottom: 3rem !important;
   line-height: 1.6;
+  transition: color 0.3s;
 }
 
+/* 暗黑模式适配 */
+:global(html.dark) .v4-fitted-title {
+  color: #f1f5f9 !important;
+}
+
+:global(html.dark) .v4-section-desc {
+  color: #94a3b8 !important;
+}
+
+:global(html.dark) .v4-tight-header {
+  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* ==========================================
+   子分类大模块间距调整（解决红框拥挤问题）
+========================================== */
+.category-block {
+  /* 将底部间距大幅拉开，提供两个大模块之间的视觉缓冲 (建议 3.5rem 到 4.5rem) */
+  margin-bottom: 4rem !important;
+}
+
+/* 细节优化：最后一个分类不需要底部间距，避免撑大整个页面的底部留白 */
+.category-block:last-child {
+  margin-bottom: 1rem !important;
+}
+
+/* 顺便微调一下小标题和下方卡片网格的间距（让标题和自己的卡片稍微贴紧一点，显得更有关联性） */
 .category-title {
   font-size: 1.25rem;
   font-weight: 600;
   color: var(--c-text);
-  margin-bottom: 1rem;
+  margin-bottom: 1.2rem !important;
   padding-left: 10px;
   border-left: 4px solid #3eaf7c;
   line-height: 1.2;
