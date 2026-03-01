@@ -344,4 +344,25 @@ html.dark .v4-section-desc,
 html[data-theme='dark'] .v4-section-desc {
   color: #94a3b8 !important;
 }
+
+/* ==========================================
+   面包屑暗黑模式高亮提纯
+========================================== */
+html.dark .v4-crumb-link,
+html[data-theme='dark'] .v4-crumb-link {
+  color: #4ade80 !important;
+  /* 稍微提亮品牌绿，使其在黑底上更通透 */
+}
+
+html.dark .v4-crumb-separator,
+html[data-theme='dark'] .v4-crumb-separator {
+  color: #64748b !important;
+  /* 适中的柔和灰，不抢戏但清晰可见 */
+}
+
+html.dark .v4-crumb-current,
+html[data-theme='dark'] .v4-crumb-current {
+  color: #e2e8f0 !important;
+  /* 高亮冷白灰，彻底告别暗沉，确保极佳阅读性 */
+}
 </style>
