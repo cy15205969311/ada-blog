@@ -150,12 +150,21 @@ const getAllItems = () => {
   transition: color 0.3s;
 }
 
-:global(html.dark) .v4-fitted-title {
-  color: #f1f5f9 !important;
-}
-
+/* --- 暗黑模式终极适配 --- */
+:global(html.dark) .v4-crumb-current,
 :global(html.dark) .v4-section-desc {
   color: #94a3b8 !important;
+}
+
+:global(html.dark) .v4-crumb-separator {
+  color: #475569 !important;
+}
+
+/* 核心修复：精准狙击 v4-fitted-title，强制在暗黑模式下反转为纯白 */
+:global(html.dark) .v4-main-title,
+:global(html.dark) .v4-fitted-title,
+:global(html[data-theme='dark']) .v4-fitted-title {
+  color: #f8f9fa !important;
 }
 
 :global(html.dark) .v4-tight-header {
@@ -315,5 +324,24 @@ html.dark .tech-card {
     background: rgba(255, 255, 255, 0.07) !important;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6) !important;
   }
+}
+</style>
+
+<style>
+html.dark .v4-main-title,
+html.dark .v4-fitted-title,
+html[data-theme='dark'] .v4-fitted-title {
+  color: #f8f9fa !important;
+}
+
+html.dark .v4-tight-header,
+html[data-theme='dark'] .v4-tight-header {
+  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* 确保描述文字也完美反转 */
+html.dark .v4-section-desc,
+html[data-theme='dark'] .v4-section-desc {
+  color: #94a3b8 !important;
 }
 </style>
