@@ -22,17 +22,11 @@
 </template>
 
 <script setup>
-import { computed, ref, onMounted } from 'vue';
+import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 const route = useRoute();
 const router = useRouter();
-const isClient = ref(false);
-
-// 确保只在客户端渲染
-onMounted(() => {
-  isClient.value = true;
-});
 
 const pathTitleMap = {
   '/': '首页',
@@ -43,22 +37,21 @@ const pathTitleMap = {
 };
 
 const breadcrumbs = computed(() => {
-  // SSR 安全检查：确保 route 对象存在且在客户端
-  if (!isClient.value || !route || !route.path) {
-    return [{
-      title: '首页',
-      path: '/'
-    }];
+  // 安全检查：确保 route 对象存在
+  if (!route || !route.path) {
+    return [];
   }
 
   const path = route.path;
   const crumbs = [];
 
+  // 添加首页
   crumbs.push({
     title: '首页',
     path: '/'
   });
 
+  // 如果不是首页，构建面包屑路径
   if (path !== '/') {
     const segments = path.split('/').filter(Boolean);
     let currentPath = '';
@@ -66,6 +59,7 @@ const breadcrumbs = computed(() => {
     segments.forEach((segment, index) => {
       currentPath += `/${segment}`;
 
+      // 确保目录路径以 / 结尾
       if (index === segments.length - 1 && !currentPath.endsWith('/')) {
         currentPath += '/';
       }
@@ -83,8 +77,13 @@ const breadcrumbs = computed(() => {
 });
 
 const navigate = (path) => {
-  if (path && isClient.value) {
-    router.push(path);
+  // 安全检查：确保 path 存在
+  if (path && router) {
+    try {
+      router.push(path);
+    } catch (e) {
+      console.error('Navigation failed:', e);
+    }
   }
 };
 </script>
