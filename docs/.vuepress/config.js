@@ -11,9 +11,22 @@ export default defineUserConfig({
   title: 'Ada Blog',
   description: '现代化个人博客',
 
+  // 配置网站头部标签
+  head: [
+    // 1. 注册主 Favicon (PNG 格式)
+    ['link', { rel: 'icon', href: '/favicon.png' }],
+    // 2. 适配苹果移动设备的桌面图标
+    ['link', { rel: 'apple-touch-icon', href: '/favicon.png' }]
+  ],
+
   bundler: viteBundler(),
 
   theme: defaultTheme({
+    // 导航栏 Logo（使用 favicon 图片）
+    logo: '/favicon.png',
+    // 暗黑模式下的 Logo
+    logoDark: '/favicon.png',
+
     navbar: [
       { text: '首页', link: '/' },
       { text: '计算机技术', link: '/tech/' },

@@ -248,3 +248,39 @@ body,
   overflow-x: hidden !important;
   /* 强行裁切所有超出屏幕宽度的幽灵元素 */
 }
+
+
+/* ==========================================
+   Favicon 智能暗黑/白天模式适配补丁
+========================================== */
+/* 当浏览器处于白天模式（light theme）时，强制 Favicon 使用 CSS 滤镜进行反色 */
+/* 这样你的图标在白天模式的标签页中，就会变成白色背景上的一个绿色弹簧 */
+:global(html:not(.dark)) head>link[rel="icon"] {
+  filter: invert(1) hue-rotate(180deg) !important;
+}
+
+
+/* ==========================================
+   全站暗黑背景色强制统一：修复首屏按需加载样式丢失 Bug
+========================================== */
+html.dark body,
+html[data-theme='dark'] body,
+html.dark .navbar,
+html[data-theme='dark'] .navbar,
+html.dark .sidebar,
+html[data-theme='dark'] .sidebar,
+html.dark .page,
+html[data-theme='dark'] .page {
+  background-color: #121828 !important;
+  --c-bg: #121828 !important;
+}
+
+html.dark .navbar,
+html[data-theme='dark'] .navbar {
+  border-bottom-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+html.dark .theme-container,
+html[data-theme='dark'] .theme-container {
+  background: transparent !important;
+}
