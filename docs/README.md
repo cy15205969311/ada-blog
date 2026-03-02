@@ -1,4 +1,5 @@
 ---
+title: 首页
 home: false
 ---
 <DarkSciFiHero/>

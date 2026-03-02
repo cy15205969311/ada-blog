@@ -40,7 +40,6 @@ const pathTitleMap = {
   '/media/': '新媒体运营',
   '/ecommerce/': '跨境电商',
   '/about/': '关于',
-  '/tools/': '工具导航'
 };
 
 const breadcrumbs = computed(() => {
