@@ -30,8 +30,8 @@
           <p class="sub-title">Exploring the tech world, sharing thoughts on creativity and implementation.</p>
         </div>
         <div class="action-buttons">
-          <a href="/tech/" class="btn primary-btn">🚀 开始探索</a>
-          <a href="/about/" class="btn secondary-btn">👨‍💻 关于我</a>
+          <a href="/tech/" class="btn primary-btn">开始探索</a>
+          <a href="/about/" class="btn secondary-btn">关于我</a>
         </div>
       </div>
     </div>

@@ -443,3 +443,42 @@ html[data-theme='dark'] .theme-container {
     opacity: 0;
   }
 }
+
+
+/* ==========================================
+   移动端首屏按钮：精致化"胶囊"重构
+========================================== */
+@media (max-width: 768px) {
+
+  /* 1. 按钮容器：改为垂直排列并强制子元素水平居中，拒绝拉伸 */
+  .action-buttons {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    /* 核心：让内部的按钮根据自身内容收缩，并在中间对齐 */
+    width: 100% !important;
+    margin-top: 1.5rem !important;
+  }
+
+  /* 2. 按钮本体：收缩宽度、降低高度、雕琢圆角 */
+  .btn,
+  .primary-btn,
+  .secondary-btn {
+    width: auto !important;
+    /* 核心：推翻 100% 宽度 */
+    min-width: 180px !important;
+    /* 设定一个好看的最小宽度，防止字太少缩成一团 */
+    max-width: 80% !important;
+    /* 限制最大宽度，两边必须留白 */
+    padding: 10px 28px !important;
+    /* 调整上下内边距，让按钮变得扁平精致 */
+    font-size: 1rem !important;
+    /* 字体微缩 */
+    border-radius: 30px !important;
+    /* 完美的半圆胶囊弧度 */
+    margin: 0 0 1rem 0 !important;
+    /* 取消左右外边距，仅保留下方间距隔开两个按钮 */
+    box-sizing: border-box !important;
+    justify-content: center !important;
+  }
+}
