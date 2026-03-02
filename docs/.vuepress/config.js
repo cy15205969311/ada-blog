@@ -7,6 +7,10 @@ import { registerComponentsPlugin } from '@vuepress/plugin-register-components'
 const __dirname = getDirname(import.meta.url)
 
 export default defineUserConfig({
+  // GitHub Pages 部署配置：仓库名为 ada-blog，所以 base 必须是 '/ada-blog/'
+  // 这样可以确保 CSS/JS/图片等资源路径正确，防止 404 错误
+  base: '/ada-blog/',
+
   lang: 'zh-CN',
   title: 'Ada Blog',
   description: '现代化个人博客',
