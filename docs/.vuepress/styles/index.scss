@@ -305,3 +305,141 @@ html[data-theme='dark'] .theme-container {
     /* 防止标题换行 */
   }
 }
+
+
+/* ==========================================
+   响应式设备下滑引导动画 (桌面/平板/手机多态)
+========================================== */
+.device-scroll-indicator {
+  position: absolute;
+  bottom: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0.8;
+  transition: opacity 0.3s;
+  cursor: pointer;
+}
+
+.device-scroll-indicator:hover {
+  opacity: 1;
+}
+
+/* 基础设备外壳样式 (使用品牌绿) */
+.indicator-desktop,
+.indicator-tablet,
+.indicator-mobile {
+  position: relative;
+  border: 2px solid #3eaf7c;
+  display: none;
+  /* 默认全部隐藏，交由媒体查询接管 */
+}
+
+/* ==========================================
+   1. 桌面端 (>1024px)：鼠标与滚轮向下动画
+========================================== */
+@media (min-width: 1025px) {
+  .indicator-desktop {
+    display: block;
+    width: 30px;
+    height: 48px;
+    border-radius: 15px;
+    /* 鼠标圆润造型 */
+  }
+
+  .indicator-desktop::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 8px;
+    border-radius: 2px;
+    background-color: #3eaf7c;
+    animation: mouse-scroll 1.5s cubic-bezier(0.65, 0.05, 0.36, 1) infinite;
+  }
+}
+
+/* ==========================================
+   2. 平板端 (769px - 1024px)：平板外框与手势向上
+========================================== */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .indicator-tablet {
+    display: block;
+    width: 44px;
+    height: 58px;
+    border-radius: 8px;
+    /* 平板微圆角 */
+  }
+
+  .indicator-tablet::before {
+    content: '';
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #3eaf7c;
+    animation: touch-swipe 1.5s cubic-bezier(0.65, 0.05, 0.36, 1) infinite;
+  }
+}
+
+/* ==========================================
+   3. 手机端 (<=768px)：手机外框与手势向上
+========================================== */
+@media (max-width: 768px) {
+  .indicator-mobile {
+    display: block;
+    width: 24px;
+    height: 48px;
+    border-radius: 6px;
+    /* 手机修长造型 */
+  }
+
+  .indicator-mobile::before {
+    content: '';
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: #3eaf7c;
+    animation: touch-swipe 1.5s cubic-bezier(0.65, 0.05, 0.36, 1) infinite;
+  }
+}
+
+/* ==========================================
+   物理运动轨迹动画库
+========================================== */
+/* 鼠标滚轮：从上往下滑动并淡出 */
+@keyframes mouse-scroll {
+  0% {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(-50%, 16px);
+    opacity: 0;
+  }
+}
+
+/* 触控手势：从下往上滑动并淡出 (模拟手指往上推屏幕) */
+@keyframes touch-swipe {
+  0% {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(-50%, -20px);
+    opacity: 0;
+  }
+}

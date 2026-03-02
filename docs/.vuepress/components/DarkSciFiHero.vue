@@ -37,8 +37,10 @@
     </div>
 
     <div class="parallax-layer mouse-layer" :style="parallaxStyle.mouse">
-      <div class="scroll-indicator">
-        <div class="mouse-icon"></div>
+      <div class="device-scroll-indicator">
+        <div class="indicator-desktop"></div>
+        <div class="indicator-tablet"></div>
+        <div class="indicator-mobile"></div>
       </div>
     </div>
   </div>
@@ -398,34 +400,7 @@ html.dark .triangle-3 {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* 鼠标指示器 */
-.scroll-indicator {
-  position: absolute;
-  bottom: 8%;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.mouse-icon {
-  width: 26px;
-  height: 42px;
-  border: 2px solid rgba(255, 255, 255, 0.7);
-  border-radius: 20px;
-  position: relative;
-}
-
-.mouse-icon::before {
-  content: '';
-  position: absolute;
-  top: 6px;
-  left: 50%;
-  margin-left: -2px;
-  width: 4px;
-  height: 8px;
-  background: #ffffff;
-  border-radius: 2px;
-  animation: mouse-scroll 1.5s cubic-bezier(0.15, 0.41, 0.69, 0.94) infinite;
-}
+/* 鼠标指示器样式已移至全局 index.scss，实现设备多态响应式动画 */
 
 /* ==========================================
    3. 终极动效：电影级入场动画 (CSS Keyframes)
@@ -458,19 +433,6 @@ html.dark .triangle-3 {
   }
 }
 
-/* 鼠标滚动提示动画 */
-@keyframes mouse-scroll {
-  0% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-
-  100% {
-    transform: translateY(15px);
-    opacity: 0;
-  }
-}
-
 /* --- 核心：初始隐藏状态 --- */
 /* 只有当 JS 添加了 is-loaded 类后，动画才会被触发，彻底解决水合问题 */
 .yellow-sun,
@@ -478,7 +440,7 @@ html.dark .triangle-3 {
 .main-title .line2,
 .sub-title,
 .action-buttons,
-.scroll-indicator {
+.device-scroll-indicator {
   opacity: 0;
   /* 默认不可见 */
   will-change: transform, opacity, filter;
@@ -511,8 +473,8 @@ html.dark .triangle-3 {
     animation: fade-up-focus 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.85s forwards;
   }
 
-  /* 4. 鼠标指示器最后出现 */
-  .scroll-indicator {
+  /* 4. 设备滚动指示器最后出现 */
+  .device-scroll-indicator {
     animation: fade-up-focus 1.4s cubic-bezier(0.22, 1, 0.36, 1) 1.6s forwards;
   }
 }
