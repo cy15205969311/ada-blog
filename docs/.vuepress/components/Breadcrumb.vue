@@ -22,11 +22,17 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 const route = useRoute();
 const router = useRouter();
+const isClient = ref(false);
+
+// 确保只在客户端渲染
+onMounted(() => {
+  isClient.value = true;
+});
 
 const pathTitleMap = {
   '/': '首页',
@@ -38,6 +44,14 @@ const pathTitleMap = {
 };
 
 const breadcrumbs = computed(() => {
+  // SSR 安全检查：确保 route 对象存在且在客户端
+  if (!isClient.value || !route || !route.path) {
+    return [{
+      title: '首页',
+      path: '/'
+    }];
+  }
+
   const path = route.path;
   const crumbs = [];
 
@@ -70,7 +84,7 @@ const breadcrumbs = computed(() => {
 });
 
 const navigate = (path) => {
-  if (path) {
+  if (path && isClient.value) {
     router.push(path);
   }
 };
