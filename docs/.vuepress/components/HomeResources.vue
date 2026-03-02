@@ -280,20 +280,25 @@ const openLink = (url) => {
   font-size: 1.05rem;
   font-weight: 700;
   color: #1e293b;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  /* 核心修复：解除单行封印，允许文字自然折行 */
+  white-space: normal !important;
+  word-wrap: break-word !important;
+  word-break: break-word !important;
+  line-height: 1.4 !important;
+  /* 给多行标题增加一点呼吸感 */
+  margin-bottom: 4px;
+  /* 防止标题换行后和下方的描述文字贴得太近 */
 }
 
 .home-res-v5-desc {
   font-size: 0.85rem;
   color: #64748b;
   line-height: 1.6;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  display: block;
+  white-space: normal;
+  overflow: visible;
+  word-wrap: break-word;
+  word-break: break-word;
 }
 
 /* 底部按钮 */

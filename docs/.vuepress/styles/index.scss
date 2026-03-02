@@ -482,3 +482,32 @@ html[data-theme='dark'] .theme-container {
     justify-content: center !important;
   }
 }
+
+
+/* ==========================================
+   首页工具卡片：强制文字自然换行，取消省略号截断
+========================================== */
+/* 这里的类名涵盖了 VuePress 及主流主题常见的卡片描述类名 */
+.vp-project-card-desc,
+.project-card .desc,
+.card-desc,
+.item-desc,
+.description,
+.vp-feature-details,
+.vp-features .vp-feature h2+p {
+  display: block !important;
+  /* 覆盖可能存在的 -webkit-box */
+  white-space: normal !important;
+  /* 强制允许换行 */
+  overflow: visible !important;
+  /* 取消溢出隐藏 */
+  word-wrap: break-word !important;
+  /* 保证长单词或链接自动换行 */
+  word-break: break-word !important;
+  -webkit-line-clamp: unset !important;
+  /* 核心：解除多行省略号封印 */
+  max-height: none !important;
+  /* 取消可能存在的高度死锁 */
+  line-height: 1.6 !important;
+  /* 增加一点行高，让多行文字更有呼吸感 */
+}

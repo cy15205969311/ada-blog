@@ -365,12 +365,12 @@ const getAllItems = () => {
   font-size: 0.85rem !important;
   color: var(--c-text-light) !important;
   margin: 0 !important;
-  line-height: 1.5 !important;
-  display: -webkit-box !important;
-  -webkit-line-clamp: 2 !important;
-  line-clamp: 2 !important;
-  -webkit-box-orient: vertical !important;
-  overflow: hidden !important;
+  line-height: 1.6 !important;
+  display: block !important;
+  white-space: normal !important;
+  overflow: visible !important;
+  word-wrap: break-word !important;
+  word-break: break-word !important;
 }
 
 /* --- 终极质感：暗黑模式专属微调 (兼容 VuePress 2) --- */
