@@ -19,6 +19,7 @@
     "vuepress": "2.0.0-rc.26"
   },
   "dependencies": {
+    "@vercel/analytics": "^1.6.1",
     "@vueuse/motion": "^3.0.3"
   }
 }
