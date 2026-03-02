@@ -8,4 +8,3 @@ pnpm-lock.yaml
 docs/.vuepress/.temp/
 docs/.vuepress/.cache/
 docs/.vuepress/dist/
-node_modules
