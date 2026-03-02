@@ -22,11 +22,38 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, ref, watch, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 const route = useRoute();
 const router = useRouter();
+const isMounted = ref(false);
+
+// 在服务端和客户端都能获取初始路径
+const getInitialPath = () => {
+  if (typeof window !== 'undefined' && window.location) {
+    return window.location.pathname;
+  }
+  return route?.path || '/';
+};
+
+// 使用 ref 缓存路径，防止水合时路由未就绪导致面包屑消失
+const currentPath = ref(getInitialPath());
+
+onMounted(() => {
+  isMounted.value = true;
+  // 确保挂载后立即同步路由路径
+  if (route?.path) {
+    currentPath.value = route.path;
+  }
+});
+
+// 监听路由变化，更新缓存的路径
+watch(() => route?.path, (newPath) => {
+  if (newPath) {
+    currentPath.value = newPath;
+  }
+}, { immediate: true });
 
 const pathTitleMap = {
   '/': '首页',
@@ -37,12 +64,14 @@ const pathTitleMap = {
 };
 
 const breadcrumbs = computed(() => {
-  // 安全检查：确保 route 对象存在
-  if (!route || !route.path) {
-    return [];
+  // 使用缓存的路径，确保即使 route 未就绪也能显示
+  let path = currentPath.value || '/';
+
+  // 确保路径格式一致（处理尾斜杠）
+  if (path !== '/' && !path.endsWith('/')) {
+    path += '/';
   }
 
-  const path = route.path;
   const crumbs = [];
 
   // 添加首页
@@ -54,21 +83,21 @@ const breadcrumbs = computed(() => {
   // 如果不是首页，构建面包屑路径
   if (path !== '/') {
     const segments = path.split('/').filter(Boolean);
-    let currentPath = '';
+    let buildPath = '';
 
     segments.forEach((segment, index) => {
-      currentPath += `/${segment}`;
+      buildPath += `/${segment}`;
 
       // 确保目录路径以 / 结尾
-      if (index === segments.length - 1 && !currentPath.endsWith('/')) {
-        currentPath += '/';
+      if (index === segments.length - 1 && !buildPath.endsWith('/')) {
+        buildPath += '/';
       }
 
-      const title = pathTitleMap[currentPath] || segment;
+      const title = pathTitleMap[buildPath] || segment;
 
       crumbs.push({
         title: title,
-        path: currentPath
+        path: buildPath
       });
     });
   }
