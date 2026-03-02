@@ -284,3 +284,24 @@ html.dark .theme-container,
 html[data-theme='dark'] .theme-container {
   background: transparent !important;
 }
+
+
+/* ==========================================
+   移动端导航栏：强制显示网站标题 (Logo + Text)
+========================================== */
+@media (max-width: 768px) {
+
+  .navbar .site-name,
+  .vp-site-name {
+    display: inline-block !important;
+    /* 核心：推翻系统的 display: none 强制隐藏 */
+    font-size: 1.1rem !important;
+    /* 手机端稍微收缩一点字号，防止挤压右侧的月亮图标 */
+    margin-left: 0.5rem !important;
+    /* 保证与左侧 Logo 的呼吸间距 */
+    vertical-align: middle !important;
+    /* 确保与 Logo 垂直居中对齐 */
+    white-space: nowrap !important;
+    /* 防止标题换行 */
+  }
+}
