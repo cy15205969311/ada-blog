@@ -106,12 +106,32 @@ const breadcrumbs = computed(() => {
 });
 
 const navigate = (path) => {
-  // 安全检查：确保 path 存在
-  if (path && router) {
+  console.log('Breadcrumb navigate called with path:', path);
+
+  // 多重安全检查和降级策略
+  if (!path) {
+    console.warn('Navigate: path is empty');
+    return;
+  }
+
+  // 策略1: 使用 Vue Router（推荐）
+  if (router && typeof router.push === 'function') {
     try {
+      console.log('Using Vue Router to navigate to:', path);
       router.push(path);
+      return;
     } catch (e) {
-      console.error('Navigation failed:', e);
+      console.warn('Router navigation failed, falling back to window.location:', e);
+    }
+  }
+
+  // 策略2: 降级到原生浏览器导航
+  if (typeof window !== 'undefined') {
+    try {
+      console.log('Using window.location to navigate to:', path);
+      window.location.href = path;
+    } catch (e) {
+      console.error('Navigation completely failed:', e);
     }
   }
 };
@@ -137,15 +157,27 @@ const navigate = (path) => {
 .v4-crumb-link {
   color: #3eaf7c !important;
   cursor: pointer !important;
-  transition: opacity 0.3s ease !important;
+  transition: all 0.3s ease !important;
   text-decoration: none !important;
   display: inline-flex !important;
   align-items: center !important;
   gap: 6px !important;
+  user-select: none !important;
+  /* 确保点击区域足够大 */
+  padding: 2px 4px !important;
+  margin: -2px -4px !important;
+  border-radius: 4px !important;
 }
 
 .v4-crumb-link:hover {
-  opacity: 0.7 !important;
+  opacity: 0.8 !important;
+  background-color: rgba(62, 175, 124, 0.1) !important;
+  transform: translateY(-1px) !important;
+}
+
+.v4-crumb-link:active {
+  transform: translateY(0) !important;
+  opacity: 0.6 !important;
 }
 
 .v4-home-icon {
