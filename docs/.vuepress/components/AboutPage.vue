@@ -427,4 +427,127 @@ html.dark .feature-item-final:hover {
     padding: 1.5rem 1.2rem;
   }
 }
+
+/* ==========================================
+   移动端"关于页面"：精细化排版 (左对齐阅读 + 居中卡片)
+========================================== */
+@media (max-width: 768px) {
+
+  /* 1. 最外层容器：恢复标准块级布局，仅保留对称安全区 */
+  .about-page-final {
+    display: block !important;
+    /* 核心修复：取消全局 flex 居中 */
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+  }
+
+  .about-content-wrapper {
+    display: block !important;
+    /* 恢复正常文档流 */
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+  }
+
+  /* 2. 面包屑导航：强制靠左对齐 */
+  .v4-breadcrumb-nav,
+  .breadcrumb {
+    display: flex !important;
+    justify-content: flex-start !important;
+    /* 靠左 */
+    width: 100% !important;
+  }
+
+  /* 3. 头部标题保持居中（符合设计规范） */
+  .hero-section-final {
+    text-align: center !important;
+    width: 100% !important;
+  }
+
+  /* 4. 描述文本与使命卡片：强制左对齐，保障大段文字阅读体验 */
+  .hero-desc-final,
+  .mission-card-final,
+  .mission-text-final {
+    text-align: left !important;
+    /* 核心修复：文字居左排列 */
+    width: 100% !important;
+  }
+
+  /* 4.1 段落文字首行缩进两字符 */
+  .hero-desc-final,
+  .mission-text-final,
+  .contact-intro-final {
+    text-indent: 2em !important;
+  }
+
+  /* 5. 卡片网格：保留完美的绝对居中对齐 */
+  .features-section-final {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    padding: 0 !important;
+  }
+
+  .feature-item-final {
+    width: 100% !important;
+    max-width: 380px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-bottom: 1.5rem !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 6. 底部双列信息区域：保持左对齐阅读体验 */
+  .footer-section-final {
+    width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .footer-col-final {
+    width: 100% !important;
+    text-align: left !important;
+  }
+
+  /* 7. 技术栈列表和联系信息：确保左对齐 */
+  .tech-stack-final,
+  .contact-intro-final,
+  .contact-row-final {
+    text-align: left !important;
+  }
+
+  /* ==========================================
+     移动端"使命卡片"：精准边距与排版修复
+  ========================================== */
+  .mission-card-final {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 1.5rem !important;
+    /* 缩小手机端卡片内部的留白，避免文字被挤压 */
+    margin-left: 0 !important;
+    /* 强制剥离可能导致偏移的侧边距 */
+    margin-right: 0 !important;
+    margin-top: 1.5rem !important;
+    margin-bottom: 2rem !important;
+  }
+
+  .mission-title-final {
+    text-align: center !important;
+    /* 卡片标题保持居中，稳住视觉轴心 */
+    margin-bottom: 1rem !important;
+  }
+
+  .mission-text-final {
+    text-align: left !important;
+    /* 核心修复：大段文字强制左对齐，治愈阅读强迫症 */
+    line-height: 1.6 !important;
+    /* 拉开一点行高，让文字更有呼吸感 */
+  }
+}
 </style>
