@@ -609,12 +609,10 @@ function goHome() {
 }
 
 .dino-canvas {
+  background: var(--c-bg-light, #fafbfc);
   border: 2px solid var(--c-border, #e2e8f0);
   border-radius: 12px;
-  background: #fafbfc;
-  /* 更柔和的浅灰色背景，护眼 */
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-  /* 减轻阴影 */
   cursor: pointer;
   transition: all 0.3s ease;
   max-width: 100%;
@@ -749,6 +747,28 @@ function goHome() {
 :global(html.dark) .dino-home-btn:hover,
 :global(html[data-theme='dark']) .dino-home-btn:hover {
   background: #22c55e;
+}
+
+/* 强力适配各类 VuePress 2 主题的暗黑模式 */
+:global(html.dark) .dino-canvas,
+:global(html[data-theme='dark']) .dino-canvas,
+:global([data-theme='dark']) .dino-canvas {
+  background-color: rgba(255, 255, 255, 0.03) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  box-shadow: none !important;
+}
+
+/* 确保最高分和当前分数的文字在暗夜模式下也能清晰可见 */
+:global(html.dark) .score-value,
+:global(html[data-theme='dark']) .score-value,
+:global(html.dark) .score-label,
+:global(html[data-theme='dark']) .score-label {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+:global(html.dark) .score-current,
+:global(html[data-theme='dark']) .score-current {
+  color: rgba(255, 255, 255, 0.9) !important;
 }
 
 /* 移动端优化 */
