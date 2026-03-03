@@ -29,9 +29,6 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
-import { useRouter } from 'vue-router';
-
-const router = useRouter();
 const gameCanvas = ref(null);
 
 // 游戏状态
@@ -553,7 +550,7 @@ function handleTouch(e) {
 
 // 返回首页
 function goHome() {
-  router.push('/');
+  window.location.href = '/';
 }
 </script>
 
