@@ -2,6 +2,7 @@
 title: 首页
 home: false
 ---
+<HeroParticles />
 <DarkSciFiHero/>
 <TechMarquee />
 
