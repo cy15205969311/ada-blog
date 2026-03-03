@@ -204,5 +204,95 @@ export const techData = [
         icon: "https://tinypng.com/images/apple-touch-icon.png"
       }
     ]
+  },
+  {
+    category: "网站部署",
+    items: [
+      {
+        title: "Vercel",
+        desc: "最佳的前端部署平台，支持开发、预览、发布（Develop. Preview. Ship.）",
+        link: "https://vercel.com",
+        icon: "https://vercel.com/favicon.ico"
+      },
+      {
+        title: "Netlify",
+        desc: "构建、部署和扩展现代 Web 应用程序的最快方式",
+        link: "https://www.netlify.com",
+        icon: "https://www.netlify.com/favicon.ico"
+      },
+      {
+        title: "GitHub Pages",
+        desc: "直接从 GitHub 仓库托管的网站",
+        link: "https://pages.github.com",
+        icon: "https://github.com/favicon.ico"
+      },
+      {
+        title: "Cloudflare Pages",
+        desc: "面向前端开发人员的 JAMstack 平台",
+        link: "https://pages.cloudflare.com",
+        icon: "https://www.google.com/s2/favicons?domain=https://pages.cloudflare.com/&sz=32"
+      },
+      {
+        title: "Zeabur",
+        desc: "只需点击一下即可部署您的服务",
+        link: "https://zeabur.com",
+        icon: "https://www.google.com/s2/favicons?domain=https://zeabur.com/&sz=32"
+      },
+      {
+        title: "Render",
+        desc: "构建和运行所有应用程序和网站的最快方式",
+        link: "https://render.com",
+        icon: "https://www.google.com/s2/favicons?domain=https://render.com/&sz=32"
+      }
+    ]
+  },
+  {
+    category: "API测试",
+    items: [
+      {
+        title: "Postman",
+        desc: "用于构建和使用 API 的 API 平台",
+        link: "https://www.postman.com",
+        icon: "https://www.google.com/s2/favicons?domain=https://www.postman.com/&sz=32"
+      },
+      {
+        title: "Apifox",
+        desc: "API 文档、API 调试、API Mock、API 自动化测试一体化协作平台",
+        link: "https://www.apifox.cn",
+        icon: "https://www.google.com/s2/favicons?domain=https://www.apifox.cn/&sz=32"
+      },
+      {
+        title: "Swagger",
+        desc: "OpenAPI 规范的 API 工具链",
+        link: "https://swagger.io",
+        icon: "https://www.google.com/s2/favicons?domain=https://swagger.io/&sz=32"
+      },
+      {
+        title: "YApi",
+        desc: "高效、易用、功能强大的 API 管理平台",
+        link: "https://yapi.ymfe.org",
+        icon: "https://www.google.com/s2/favicons?domain=https://hellosean1025.github.io/yapi/&sz=32"
+      },
+      {
+        title: "Bruno",
+        desc: "开源、离线优先的 API 客户端",
+        link: "	https://www.usebruno.com",
+        icon: "https://www.usebruno.com/favicon.ico"
+      },
+
+      {
+        title: "Insomnia",
+        desc: "API 客户端，用于构建和测试 API",
+        link: "https://insomnia.rest",
+        icon: "https://www.google.com/s2/favicons?domain=https://insomnia.rest/&sz=32"
+      },
+
+      {
+        title: "Hoppscotch",
+        desc: "开源 API 测试平台，用于构建和测试 API",
+        link: "https://hoppscotch.io",
+        icon: "https://www.google.com/s2/favicons?domain=https://hoppscotch.io/&sz=32"
+      }
+    ]
   }
 ];
