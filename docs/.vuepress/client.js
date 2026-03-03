@@ -1,6 +1,7 @@
 import { defineClientConfig } from 'vuepress/client'
 import { MotionPlugin } from '@vueuse/motion'
 import { inject } from '@vercel/analytics'
+import NotFound from './components/NotFound.vue'
 
 export default defineClientConfig({
   enhance({ app }) {
@@ -12,4 +13,7 @@ export default defineClientConfig({
       inject()
     }
   },
+  layouts: {
+    NotFound // 全局覆盖默认的 404 布局，启用恐龙游戏
+  }
 })
